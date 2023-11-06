@@ -1,1 +1,6 @@
 node_modules
+.env
+package-lock.json
+.package-lock.json
+migration.sql
+migration_lock.toml
