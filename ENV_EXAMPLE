@@ -1,1 +1,1 @@
-DATABASE_URL; //mysql database url
+DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"; //mysql database url
