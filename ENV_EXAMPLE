@@ -1,1 +1,4 @@
 DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"; //mysql database url
+auth_private_key="PRIVATE_KEY"; //private key for jwt
+pepper="password"; //password for bycrypt
+salt; //number of salt rounds
