@@ -12,6 +12,8 @@ model Doctor {
   lastName String
   email String @unique
   password String
+  createdAT DateTime @default(now())
+  apdatedAt DateTime @updatedAt
 }
 
 model Research{
@@ -19,6 +21,8 @@ model Research{
   title String
   description String
   doctorId Int
+  createdAT DateTime @default(now())
+  apdatedAt DateTime @updatedAt
   // doctor Doctor @relation(fields: [doctorId], references:[id])
   
 }

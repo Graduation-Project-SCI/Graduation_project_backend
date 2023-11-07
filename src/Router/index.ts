@@ -1,9 +1,9 @@
-import router from "../Controller/AuthModel";
-import e, { Router } from "express";
+import DoctorRoute from "./DoctorRuote"
+import  { Router } from "express";
 
 const routes = Router()
 
-routes.use('/auth', router)
+routes.use('/auth', DoctorRoute)
 
 export default routes
 

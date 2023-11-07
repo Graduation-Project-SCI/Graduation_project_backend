@@ -1,15 +1,9 @@
-import { createDoctor,deleteDoctor,getAllDoctors,getDoctor,updateDoctor } from "../Controller/DoctorController";
-import {Router} from 'express'
+import { Router } from 'express'
+import AuthController from '../Controller/AuthController'
+const router = Router()
 
-export const router:Router =Router()
+router.post('/login', AuthController.login)
+router.post('/createUser',AuthController.createUser)
 
-router.post('/',createDoctor)
-
-router.get('/',getAllDoctors)
-
-router.get('/:id',getDoctor)
-
-router.put('/:id',updateDoctor)
-
-router.delete('/:id',deleteDoctor)
+export default router
 
