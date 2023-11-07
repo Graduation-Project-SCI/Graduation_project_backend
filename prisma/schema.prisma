@@ -11,6 +11,7 @@ model Doctor {
   firstName String
   lastName String
   email String @unique
+  password String
 }
 
 model Research{
