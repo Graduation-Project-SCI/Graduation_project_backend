@@ -59,6 +59,8 @@ model Research {
   magazinVolume   String
   publishYear     Int
   majoring        String
+  masterStudent   Student        @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
+  masterStudentId Int
   typeId          Int            @unique
   type            Type           @relation("ResearchType", fields: [typeId], references: [id])
   departmentId    Int            @unique
@@ -93,21 +95,28 @@ model Project {
   supervisorId    Int
 }
 
+model Student {
+  studentId       Int        @id @default(autoincrement())
+  StudentName     String
+  StudentCode     Int
+  StudentResearch Research[] @relation("ResearchStudent")
+}
+
 model Type {
-  id      Int      @id @default(autoincrement())
-  name    String
-  Project Project? @relation("ProjectType")
+  id       Int       @id @default(autoincrement())
+  name     String
+  Project  Project?  @relation("ProjectType")
   Research Research? @relation("ResearchType")
 }
 
 model Department {
-  id                  Int        @id @default(autoincrement())
-  name                String
-  HeadId              Int        @unique
-  head                Professor  @relation("DepartmentHead", fields: [HeadId], references: [id])
+  id                 Int       @id @default(autoincrement())
+  name               String
+  HeadId             Int       @unique
+  head               Professor @relation("DepartmentHead", fields: [HeadId], references: [id])
   ProfessorDepartment Professor? @relation("ProfessorDepartment")
-  ResearchDepartment  Research?  @relation("ResearchDepartment")
-  ProjectDepartment   Project?   @relation("ProjectDepartment")
+  ResearchDepartment Research? @relation("ResearchDepartment")
+  ProjectDepartment  Project?  @relation("ProjectDepartment")
 }
 
 model Professor_role {
