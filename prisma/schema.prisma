@@ -24,7 +24,6 @@ model Professor {
   ProfessorResearch Research[]            @relation("ResearchAuthor")
   GraduationProject Project[]             @relation("ProjectAuthor")
   ProfessorProject  Project[]             @relation("ProjectSupervisor")
-  DepartmentHead    Department?           @relation("DepartmentHead")
 }
 
 model Professor_attachment {
@@ -112,8 +111,6 @@ model Type {
 model Department {
   id                 Int       @id @default(autoincrement())
   name               String
-  HeadId             Int       @unique
-  head               Professor @relation("DepartmentHead", fields: [HeadId], references: [id])
   ProfessorDepartment Professor? @relation("ProfessorDepartment")
   ResearchDepartment Research? @relation("ResearchDepartment")
   ProjectDepartment  Project?  @relation("ProjectDepartment")
