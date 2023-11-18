@@ -15,7 +15,7 @@ class AuthController {
     ) => {
         const hashedPassword = await bcrypt.hash(`${request.body.password}${process.env.pepper}`, 10)
         request.body.password = hashedPassword
-        const user = await prisma.doctor.create({data:request.body})
+        const user = await prisma.professor.create({data:request.body})
         user.password = ''
         const accessToken = generateAccessToken( user , request)
         response.status(201).json({
@@ -30,7 +30,7 @@ class AuthController {
         response: Response
     ) => {
             if (request.body.email != null && request.body.password != null) {
-                const user = await prisma.doctor.findUnique({
+                const user = await prisma.professor.findUnique({
                     where: {
                         email: request.body.email
                     }
