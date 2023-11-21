@@ -1,13 +1,22 @@
-import DoctorRoute from "./DoctorRuote"
+import ProfessorRoute from "./ProfessorRoute"
 import DepartmentRoute from "./DepartmentRoute"
 import ResearchRoute from "./ResearchRoute"
+import DegreeRoute from "./DegreeRoute"
+import GenderRoute from "./GenderRoute"
+import TypeRoute from "./TypeRoute"
+import StudentRoute from "./StudentRoute"
 import  { Router } from "express";
 
 const routes = Router()
 
-routes.use('/auth', DoctorRoute)
+routes.use('/auth', ProfessorRoute)
+routes.use('/professor', ProfessorRoute)
 routes.use('/department', DepartmentRoute)
 routes.use('/research', ResearchRoute)
+routes.use('/degree', DegreeRoute)
+routes.use('/gender',GenderRoute)
+routes.use('/type',TypeRoute)
+routes.use('/student',StudentRoute)
 
 
 export default routes

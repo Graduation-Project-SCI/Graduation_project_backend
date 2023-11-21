@@ -3,55 +3,55 @@ import { PrismaClient } from '@prisma/client'
 import { sendResponse } from '../helper/sendResponse'
 const prisma = new PrismaClient()
 
-class Department {
-    public static createDepartment = async (
+class Type {
+    public static createType = async (
         request: Request,
         response: Response
     ) => {
         try {
             const {name} = request.body
-            const department = await prisma.department.create({
+            const type = await prisma.type.create({
                 data : {
-                    name:name
+                    name
                 }
             });
-            return sendResponse(response, 200, 'success', department)
+            return sendResponse(response, 200, 'success',type)
         } catch (err : unknown){
-            return sendResponse(response, 404, "error can't create department.", err)
+            return sendResponse(response, 404, "error can't create type.", err)
         }
     }
     
-    public static getAllDepartments = async (
+    public static getAllTypes = async (
         request: Request,
         response: Response 
     ) => {
         try {
-            const departments = await prisma.department.findMany()
-            return sendResponse(response, 200, "success", departments)
+            const types = await prisma.type.findMany()
+            return sendResponse(response, 200, "success", types)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get departments.", err)
+            return sendResponse(response, 404, "error can't get types.", err)
         }
     }
 
-    public static getDepartmentById = async (
+    public static getTypeById = async (
         request : Request,
         response : Response
     ) => {
       const id = parseInt(request.params.id as string);
 
         try {
-            const department = await prisma.department.findUnique({
+            const type = await prisma.type.findUnique({
                 where : {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", type)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get department invalid id.", err)
+            return sendResponse(response, 404, "error can't get type invalid id.", err)
         }
     }
 
-    public static updateDepartment = async (
+    public static updatType = async (
         request: Request,
         response: Response
     ) => {
@@ -59,7 +59,7 @@ class Department {
             const name = request.body.name
             const id = parseInt(request.params.id as string);
 
-            const department = await prisma.department.update({
+            const type = await prisma.type.update({
                 data : {
                     name
                 },
@@ -67,28 +67,28 @@ class Department {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", type)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't update department.", err)
+            return sendResponse(response, 404, "error can't update type.", err)
         }
     }
 
-    public static deleteDepartment = async (
+    public static deleteType = async (
         request : Request,
         response : Response
     ) => {
         try {
           const id = parseInt(request.params.id as string);
-          const department = await prisma.department.delete({
+          const type = await prisma.type.delete({
                 where: {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", type)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't delete department.", err)
+            return sendResponse(response, 404, "error can't delete type.", err)
         }
     }
 }
 
-export default Department
+export default Type

@@ -3,55 +3,55 @@ import { PrismaClient } from '@prisma/client'
 import { sendResponse } from '../helper/sendResponse'
 const prisma = new PrismaClient()
 
-class Department {
-    public static createDepartment = async (
+class Degree {
+    public static createDegree = async (
         request: Request,
         response: Response
     ) => {
         try {
             const {name} = request.body
-            const department = await prisma.department.create({
+            const degree = await prisma.degree.create({
                 data : {
-                    name:name
+                    name
                 }
             });
-            return sendResponse(response, 200, 'success', department)
+            return sendResponse(response, 200, 'success',degree)
         } catch (err : unknown){
-            return sendResponse(response, 404, "error can't create department.", err)
+            return sendResponse(response, 404, "error can't create Degree.", err)
         }
     }
     
-    public static getAllDepartments = async (
+    public static getAllDegrees = async (
         request: Request,
         response: Response 
     ) => {
         try {
-            const departments = await prisma.department.findMany()
-            return sendResponse(response, 200, "success", departments)
+            const degrees = await prisma.degree.findMany()
+            return sendResponse(response, 200, "success", degrees)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get departments.", err)
+            return sendResponse(response, 404, "error can't get degrees.", err)
         }
     }
 
-    public static getDepartmentById = async (
+    public static getDegreeById = async (
         request : Request,
         response : Response
     ) => {
       const id = parseInt(request.params.id as string);
 
         try {
-            const department = await prisma.department.findUnique({
+            const degree = await prisma.degree.findUnique({
                 where : {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", degree)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get department invalid id.", err)
+            return sendResponse(response, 404, "error can't get degree invalid id.", err)
         }
     }
 
-    public static updateDepartment = async (
+    public static updateDegree = async (
         request: Request,
         response: Response
     ) => {
@@ -59,7 +59,7 @@ class Department {
             const name = request.body.name
             const id = parseInt(request.params.id as string);
 
-            const department = await prisma.department.update({
+            const degree = await prisma.degree.update({
                 data : {
                     name
                 },
@@ -67,28 +67,28 @@ class Department {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", degree)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't update department.", err)
+            return sendResponse(response, 404, "error can't update degree.", err)
         }
     }
 
-    public static deleteDepartment = async (
+    public static deleteDegree = async (
         request : Request,
         response : Response
     ) => {
         try {
           const id = parseInt(request.params.id as string);
-          const department = await prisma.department.delete({
+          const degree = await prisma.degree.delete({
                 where: {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", degree)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't delete department.", err)
+            return sendResponse(response, 404, "error can't delete degree.", err)
         }
     }
 }
 
-export default Department
+export default Degree
