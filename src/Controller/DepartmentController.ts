@@ -16,7 +16,7 @@ class Department {
                 }
             });
             return sendResponse(response, 200, 'success', department)
-        } catch (err : any){
+        } catch (err : unknown){
             return sendResponse(response, 404, "error can't create department.", err)
         }
     }
@@ -28,7 +28,7 @@ class Department {
         try {
             const departments = await prisma.department.findMany()
             return sendResponse(response, 200, "success", departments)
-        } catch (err : any) {
+        } catch (err : unknown) {
             return sendResponse(response, 404, "error can't get departments.", err)
         }
     }
@@ -44,7 +44,7 @@ class Department {
                 }
             })
             return sendResponse(response, 200, "success", department)
-        } catch (err : any) {
+        } catch (err : unknown) {
             return sendResponse(response, 404, "error can't get department invalid id.", err)
         }
     }
@@ -64,7 +64,7 @@ class Department {
                 }
             })
             return sendResponse(response, 200, "success", department)
-        } catch (err : any) {
+        } catch (err : unknown) {
             return sendResponse(response, 404, "error can't update department.", err)
         }
     }
@@ -81,7 +81,7 @@ class Department {
                 }
             })
             return sendResponse(response, 200, "success", department)
-        } catch (err : any) {
+        } catch (err : unknown) {
             return sendResponse(response, 404, "error can't delete department.", err)
         }
     }
