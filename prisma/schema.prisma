@@ -29,7 +29,7 @@ model Professor {
 model Professor_attachment {
   id               Int       @id @default(autoincrement())
   ssn              Int
-  degreeDate       DateTime
+  degreeDate       Int
   degreeUniversity String
   genderId         Int       @unique
   degree           Degree    @relation("HisDegree", fields: [degreeId], references: [id])
