@@ -3,55 +3,55 @@ import { PrismaClient } from '@prisma/client'
 import { sendResponse } from '../helper/sendResponse'
 const prisma = new PrismaClient()
 
-class Department {
-    public static createDepartment = async (
+class Gender {
+    public static createGender = async (
         request: Request,
         response: Response
     ) => {
         try {
             const {name} = request.body
-            const department = await prisma.department.create({
+            const gender = await prisma.gender.create({
                 data : {
-                    name:name
+                    name
                 }
             });
-            return sendResponse(response, 200, 'success', department)
+            return sendResponse(response, 200, 'success',gender)
         } catch (err : unknown){
-            return sendResponse(response, 404, "error can't create department.", err)
+            return sendResponse(response, 404, "error can't create gender.", err)
         }
     }
     
-    public static getAllDepartments = async (
+    public static getAllGenders = async (
         request: Request,
         response: Response 
     ) => {
         try {
-            const departments = await prisma.department.findMany()
-            return sendResponse(response, 200, "success", departments)
+            const gender = await prisma.gender.findMany()
+            return sendResponse(response, 200, "success",gender )
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get departments.", err)
+            return sendResponse(response, 404, "error can't get gender.", err)
         }
     }
 
-    public static getDepartmentById = async (
+    public static getGenderById = async (
         request : Request,
         response : Response
     ) => {
       const id = parseInt(request.params.id as string);
 
         try {
-            const department = await prisma.department.findUnique({
+            const gender = await prisma.gender.findUnique({
                 where : {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", gender)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get department invalid id.", err)
+            return sendResponse(response, 404, "error can't get gender invalid id.", err)
         }
     }
 
-    public static updateDepartment = async (
+    public static updateGender = async (
         request: Request,
         response: Response
     ) => {
@@ -59,7 +59,7 @@ class Department {
             const name = request.body.name
             const id = parseInt(request.params.id as string);
 
-            const department = await prisma.department.update({
+            const gender = await prisma.gender.update({
                 data : {
                     name
                 },
@@ -67,28 +67,28 @@ class Department {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", gender)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't update department.", err)
+            return sendResponse(response, 404, "error can't update gender.", err)
         }
     }
 
-    public static deleteDepartment = async (
+    public static deleteGender = async (
         request : Request,
         response : Response
     ) => {
         try {
           const id = parseInt(request.params.id as string);
-          const department = await prisma.department.delete({
+          const gender = await prisma.gender.delete({
                 where: {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", department)
+            return sendResponse(response, 200, "success", gender)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't delete department.", err)
+            return sendResponse(response, 404, "error can't delete gender.", err)
         }
     }
 }
 
-export default Department
+export default Gender
