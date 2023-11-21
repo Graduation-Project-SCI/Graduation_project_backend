@@ -47,7 +47,7 @@ class Degree {
             })
             return sendResponse(response, 200, "success", degree)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get department invalid id.", err)
+            return sendResponse(response, 404, "error can't get degree invalid id.", err)
         }
     }
 
