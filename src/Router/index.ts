@@ -1,10 +1,11 @@
-import DoctorRoute from "./DoctorRuote"
+import ProfessorRoute from "./ProfessorRuote"
 import DepartmentRoute from "./DepartmentRoute"
 import  { Router } from "express";
 
 const routes = Router()
 
-routes.use('/auth', DoctorRoute)
+routes.use('/auth', ProfessorRoute)
+routes.use('/professor', ProfessorRoute)
 routes.use('/department', DepartmentRoute)
 
 
