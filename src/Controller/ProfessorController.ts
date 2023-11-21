@@ -23,10 +23,11 @@ class Professor {
     request: Request,
     response: Response
   ) => {
+    const id = parseInt(request.params.id as string);
     try {
       const professor = await prisma.professor.findUnique({
         where: {
-          id: request.params.id as unknown as number,
+          id
         },
         include:{
           professorAttachment:true  
@@ -48,18 +49,18 @@ class Professor {
     response: Response
   ) => {
     try {
-      const { id, firstName, lastName, specialty, phoneNumber, image } = request.body;
-      const professor = prisma.professor.update({
+      const id = parseInt(request.params.id as string);
+      const { firstName, lastName, specialty, phoneNumber, image } = request.body;
+      const professor = await prisma.professor.update({
+        where: {
+          id
+        },
         data: {
           firstName,
           lastName,
           specialty,
           phoneNumber,
           image
-
-        },
-        where: {
-          id: id,
         },
       });
       return sendResponse(response, 200, "success", professor);
@@ -73,10 +74,10 @@ class Professor {
     response : Response
 ) => {
     try {
-        const {id} = request.body
-        const professor = prisma.professor.delete({
+      const id = parseInt(request.params.id as string);
+      const professor = await prisma.professor.delete({
             where: {
-                id : id
+                id
             }
         })
         return sendResponse(response, 200, "success", professor)
