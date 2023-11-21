@@ -4,9 +4,9 @@ export const sendResponse = (
     response: Response,
     code: number,
     message: string,
-    dataResponse?
+    dataResponse?: any
 ): Response => {
-    let data
+    let data: any[] = []
 
     if (dataResponse) {
         if (

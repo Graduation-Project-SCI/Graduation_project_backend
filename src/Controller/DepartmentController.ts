@@ -40,7 +40,7 @@ class Department {
         try {
             const department = await prisma.department.findUnique({
                 where : {
-                    id: request.params.id
+                    id: (request.params.id as unknown as number)
                 }
             })
             return sendResponse(response, 200, "success", department)
