@@ -8,7 +8,11 @@ class Professor {
     response: Response
   ) => {
     try {
-      const Professors = await prisma.professor.findMany();
+      const Professors = await prisma.professor.findMany({
+        include:{
+          professorAttachment:true  
+        }
+      });
       return sendResponse(response, 200, "success", Professors);
     } catch (err: unknown) {
       return sendResponse(response, 404, "error can't get Professors.", err);
@@ -24,6 +28,9 @@ class Professor {
         where: {
           id: request.params.id as unknown as number,
         },
+        include:{
+          professorAttachment:true  
+        }
       });
       return sendResponse(response, 200, "success", professor);
     } catch (err: unknown) {
