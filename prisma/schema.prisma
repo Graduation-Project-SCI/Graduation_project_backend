@@ -27,21 +27,28 @@ model Professor {
 }
 
 model Professor_attachment {
-  id          Int       @id @default(autoincrement())
-  ssn         Int
-  gender      String
-  degreeDate  DateTime
-  degreeId    Int       @unique
-  degree      Degree    @relation("HisDegree", fields: [degreeId], references: [id])
-  professorId Int       @unique
-  professor   Professor @relation("HasAttachment", fields: [professorId], references: [id])
+  id               Int       @id @default(autoincrement())
+  ssn              Int
+  degreeDate       DateTime
+  degreeUniversity String
+  genderId         Int       @unique
+  degree           Degree    @relation("HisDegree", fields: [degreeId], references: [id])
+  degreeId         Int       @unique
+  gender           Gender    @relation("HisGender", fields: [genderId], references: [id])
+  professorId      Int       @unique
+  professor        Professor @relation("HasAttachment", fields: [professorId], references: [id])
 }
 
 model Degree {
   id              Int                   @id @default(autoincrement())
   name            String
-  university      String
   ProfessorDegree Professor_attachment? @relation("HisDegree")
+}
+
+model Gender {
+  id              Int                   @id @default(autoincrement())
+  name            String
+  ProfessorGender Professor_attachment? @relation("HisGender")
 }
 
 model Research {
