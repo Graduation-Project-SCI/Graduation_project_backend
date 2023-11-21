@@ -103,8 +103,8 @@ model Project {
 
 model Student {
   studentId       Int        @id @default(autoincrement())
-  StudentName     String
-  StudentCode     Int
+  studentName     String
+  studentCode     Int
   StudentResearch Research[] @relation("ResearchStudent")
 }
 
