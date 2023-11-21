@@ -37,10 +37,12 @@ class Department {
         request : Request,
         response : Response
     ) => {
+      const id = parseInt(request.params.id as string);
+
         try {
             const department = await prisma.department.findUnique({
                 where : {
-                    id : request.params.id as unknown as number
+                    id
                 }
             })
             return sendResponse(response, 200, "success", department)
@@ -54,13 +56,15 @@ class Department {
         response: Response
     ) => {
         try {
-            const {id, name} = request.body
-            const department = prisma.department.update({
+            const name = request.body.name
+            const id = parseInt(request.params.id as string);
+
+            const department = await prisma.department.update({
                 data : {
-                    name : name
+                    name
                 },
                 where : {
-                    id : id
+                    id
                 }
             })
             return sendResponse(response, 200, "success", department)
@@ -74,10 +78,10 @@ class Department {
         response : Response
     ) => {
         try {
-            const {id} = request.body
-            const department = prisma.department.delete({
+          const id = parseInt(request.params.id as string);
+          const department = await prisma.department.delete({
                 where: {
-                    id : id
+                    id
                 }
             })
             return sendResponse(response, 200, "success", department)
