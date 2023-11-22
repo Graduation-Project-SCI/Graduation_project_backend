@@ -34,9 +34,11 @@ class ResearchController {
         response: Response
     ) => {
         try {
+            const id = parseInt(request.params.id as string);
+            console.log(id);
             const research = await prisma.research.findUnique({
                 where: {
-                    id: request.params.id as unknown as number,
+                    id
                 },
             });
             return sendResponse(response, 200, 'success', research);
@@ -50,9 +52,10 @@ class ResearchController {
         response: Response
     ) => {
         try {
+            const id = parseInt(request.params.id as string);
             const research = await prisma.research.update({
                 where: {
-                    id: request.params.id as unknown as number,
+                    id
                 },
                 data: request.body,
             });
@@ -67,9 +70,10 @@ class ResearchController {
         response: Response
     ) => {
         try {
+            const id = parseInt(request.params.id as string);
             const research = await prisma.research.delete({
                 where: {
-                    id: request.params.id as unknown as number,
+                    id
                 },
             });
             return sendResponse(response, 200, 'success', research);
@@ -83,9 +87,10 @@ class ResearchController {
         response: Response
     ) => {
         try {
+            const id = parseInt(request.params.id as string);
             const researches = await prisma.research.findMany({
                 where: {
-                    masterStudentId: request.params.id as unknown as number,
+                    masterStudentId: id
                 },
             });
             return sendResponse(response, 200, 'success', researches);
@@ -99,9 +104,10 @@ class ResearchController {
         response: Response
     ) => {
         try {
+            const id = parseInt(request.params.id as string);
             const researches = await prisma.research.findMany({
                 where: {
-                    typeId: request.params.id as unknown as number,
+                    typeId: id
                 },
             });
             return sendResponse(response, 200, 'success', researches);
@@ -115,9 +121,10 @@ class ResearchController {
         response: Response
     ) => {
         try {
+            const id = parseInt(request.params.id as string);
             const researches = await prisma.research.findMany({
                 where: {
-                    departmentId: request.params.id as unknown as number,
+                    departmentId: id
                 },
             });
             return sendResponse(response, 200, 'success', researches);
@@ -131,9 +138,10 @@ class ResearchController {
         response: Response
     ) => {
         try {
+            const id = parseInt(request.params.id as string);
             const researches = await prisma.research.findMany({
                 where: {
-                    authorId: request.params.id as unknown as number,
+                    authorId: id
                 },
             });
             return sendResponse(response, 200, 'success', researches);
@@ -147,9 +155,10 @@ class ResearchController {
         response: Response
     ) => {
         try {
+            const id = parseInt(request.params.id as string);
             const researches = await prisma.research.findMany({
                 where: {
-                    supervisorId: request.params.id as unknown as number,
+                    supervisorId:id
                 },
             });
             return sendResponse(response, 200, 'success', researches);
