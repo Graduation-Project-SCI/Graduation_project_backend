@@ -1,5 +1,6 @@
 import ProfessorRoute from "./ProfessorRoute"
 import DepartmentRoute from "./DepartmentRoute"
+import ResearchRoute from "./ResearchRoute"
 import DegreeRoute from "./DegreeRoute"
 import GenderRoute from "./GenderRoute"
 import TypeRoute from "./TypeRoute"
@@ -12,15 +13,12 @@ const routes = Router()
 routes.use('/auth', ProfessorRoute)
 routes.use('/professor', ProfessorRoute)
 routes.use('/department', DepartmentRoute)
+routes.use('/research', ResearchRoute)
 routes.use('/degree', DegreeRoute)
 routes.use('/gender',GenderRoute)
 routes.use('/type',TypeRoute)
 routes.use('/student',StudentRoute)
 routes.use('/professorRole',ProfessorRoleRoute)
-
-
-
-
 
 
 
