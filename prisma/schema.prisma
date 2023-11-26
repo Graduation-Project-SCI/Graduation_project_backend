@@ -125,10 +125,10 @@ enum Internal_position {
 }
 
 enum External_position {
-  AssistantProfessor
-  AssociateProfessor
-  FullProfessor
-  Lecturer
+  minister
+  Deputy_Minister
+  Head_of_a_department_in_the_ministry
+  Member_of_the_General_Assembly
 }
 
 model Department {
