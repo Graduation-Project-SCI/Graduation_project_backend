@@ -13,8 +13,8 @@ class ProfessorAttachment {
         ssn,
         degreeDate,
         degreeUniversity,
-        genderId,
-        degreeId,
+        gender,
+        degree,
         professorId,
       } = request.body;
       const ProfessorAttachment = await prisma.professor_attachment.create({
@@ -22,8 +22,8 @@ class ProfessorAttachment {
           ssn,
           degreeDate,
           degreeUniversity,
-          genderId,
-          degreeId,
+          gender,
+          degree,
           professorId,
         },
       });
@@ -86,8 +86,8 @@ class ProfessorAttachment {
         ssn,
         degreeDate,
         degreeUniversity,
-        genderId,
-        degreeId,
+        gender,
+        degree,
         professorId,
       } = request.body;
       const id = parseInt(request.params.id as string);
@@ -97,8 +97,8 @@ class ProfessorAttachment {
           ssn,
           degreeDate,
           degreeUniversity,
-          genderId,
-          degreeId,
+          gender,
+          degree,
           professorId,
         },
         where: {
@@ -114,12 +114,12 @@ class ProfessorAttachment {
   public static deleteProfessorAttachment = async (request: Request, response: Response) => {
     try {
       const id = parseInt(request.params.id as string);
-      const degree = await prisma.degree.delete({
+      const professor_attachment = await prisma.professor_attachment.delete({
         where: {
           id,
         },
       });
-      return sendResponse(response, 200, "success", degree);
+      return sendResponse(response, 200, "success", professor_attachment);
     } catch (err: unknown) {
       return sendResponse(response, 404, "error can't delete Professor's Attachment.", err);
     }
