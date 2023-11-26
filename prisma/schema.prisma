@@ -66,7 +66,7 @@ model Research {
   masterStudentId Int
   departmentId    Int
   masterStudent   Student        @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
-  type            Type           
+  type            Type
   department      Department     @relation("ResearchDepartment", fields: [departmentId], references: [id])
   author          Professor      @relation("ResearchAuthor", fields: [authorId], references: [id])
   authorId        Int
@@ -84,7 +84,7 @@ model Project {
   status          String
   createdBy       String
   affiliate       String
-  type            Type           
+  type            Type
   departmentId    Int
   department      Department     @relation("ProjectDepartment", fields: [departmentId], references: [id])
   professorRoleId Int            @unique
@@ -105,7 +105,11 @@ model Student {
 enum Type {
   Master
   GraduationProject
-  
+}
+
+enum Posistion_Type {
+  Internal_position
+  External_position
 }
 
 model Department {
