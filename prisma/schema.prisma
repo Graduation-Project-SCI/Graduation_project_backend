@@ -112,6 +112,25 @@ enum Posistion_Type {
   External_position
 }
 
+enum Internal_position {
+  University_President
+  Vice_President_of_the_University
+  Dean
+  College_agent
+  Head_of_the_Department
+  Program_coordinator
+  Faculty_committee_member
+  Department_committee_member
+  Department_council_member
+}
+
+enum External_position {
+  AssistantProfessor
+  AssociateProfessor
+  FullProfessor
+  Lecturer
+}
+
 model Department {
   id                  Int         @id @default(autoincrement())
   name                String
