@@ -9,8 +9,7 @@ generator client {
 
 model Professor {
   id                  Int                   @id @default(autoincrement())
-  firstName           String
-  lastName            String
+  fullName            String
   email               String                @unique
   password            String
   specialty           String?
@@ -31,24 +30,22 @@ model Professor_attachment {
   ssn              Int
   degreeDate       Int
   degreeUniversity String
-  genderId         Int       @unique
-  degree           Degree    @relation("HisDegree", fields: [degreeId], references: [id])
-  degreeId         Int       @unique
-  gender           Gender    @relation("HisGender", fields: [genderId], references: [id])
+  gender           Gender
+  degree           Degree
   professorId      Int       @unique
   professor        Professor @relation("HasAttachment", fields: [professorId], references: [id])
 }
 
-model Degree {
-  id              Int                   @id @default(autoincrement())
-  name            String
-  ProfessorDegree Professor_attachment? @relation("HisDegree")
+enum Degree {
+  Assistant
+  Associate
+  Full
+  Emeritus
 }
 
-model Gender {
-  id              Int                   @id @default(autoincrement())
-  name            String
-  ProfessorGender Professor_attachment? @relation("HisGender")
+enum Gender {
+  Male
+  Female
 }
 
 model Research {
@@ -65,14 +62,12 @@ model Research {
   magazinVolume   String
   publishYear     Int
   majoring        String
-  masterStudent   Student        @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
+  ProfessorRole   Professor_role
   masterStudentId Int
-  typeId          Int            @unique
-  type            Type           @relation("ResearchType", fields: [typeId], references: [id])
-  departmentId    Int            @unique
+  departmentId    Int
+  masterStudent   Student        @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
+  type            Type           
   department      Department     @relation("ResearchDepartment", fields: [departmentId], references: [id])
-  professorRoleId Int            @unique
-  ProfessorRole   Professor_role @relation("ResearchProfessorRole", fields: [professorRoleId], references: [id])
   author          Professor      @relation("ResearchAuthor", fields: [authorId], references: [id])
   authorId        Int
   supervisor      Professor      @relation("ResearchSupervisor", fields: [supervisorId], references: [id])
@@ -89,12 +84,11 @@ model Project {
   status          String
   createdBy       String
   affiliate       String
-  typeId          Int            @unique
-  type            Type           @relation("ProjectType", fields: [typeId], references: [id])
-  departmentId    Int            @unique
+  type            Type           
+  departmentId    Int
   department      Department     @relation("ProjectDepartment", fields: [departmentId], references: [id])
   professorRoleId Int            @unique
-  ProfessorRole   Professor_role @relation("ProfessorRole", fields: [professorRoleId], references: [id])
+  ProfessorRole   Professor_role
   author          Professor      @relation("ProjectAuthor", fields: [authorId], references: [id])
   authorId        Int
   supervisor      Professor      @relation("ProjectSupervisor", fields: [supervisorId], references: [id])
@@ -108,26 +102,23 @@ model Student {
   StudentResearch Research[] @relation("ResearchStudent")
 }
 
-model Type {
-  id       Int       @id @default(autoincrement())
-  name     String
-  Project  Project?  @relation("ProjectType")
-  Research Research? @relation("ResearchType")
+enum Type {
+  Master
+  GraduationProject
+  
 }
 
 model Department {
   id                  Int         @id @default(autoincrement())
   name                String
   ProfessorDepartment Professor[] @relation("ProfessorDepartment")
-  ResearchDepartment  Research?   @relation("ResearchDepartment")
-  ProjectDepartment   Project?    @relation("ProjectDepartment")
+  ResearchDepartment  Research[]  @relation("ResearchDepartment")
+  ProjectDepartment   Project[]   @relation("ProjectDepartment")
 }
 
-model Professor_role {
-  id       Int       @id @default(autoincrement())
-  role     String
-  Project  Project?  @relation("ProfessorRole")
-  Research Research? @relation("ResearchProfessorRole")
+enum Professor_role {
+  author
+  supervisor
 }
 
 model Servay {
