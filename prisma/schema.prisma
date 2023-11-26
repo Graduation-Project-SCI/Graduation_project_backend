@@ -16,6 +16,8 @@ model Professor {
   phoneNumber         String?
   image               String?
   token               String?
+  posistionsNumper    Int                   @default(0)
+  createdAt           DateTime              @default(now())
   departmentId        Int
   department          Department            @relation("ProfessorDepartment", fields: [departmentId], references: [id])
   professorAttachment Professor_attachment? @relation("HasAttachment")
@@ -23,17 +25,19 @@ model Professor {
   ProfessorResearch   Research[]            @relation("ResearchAuthor")
   GraduationProject   Project[]             @relation("ProjectAuthor")
   ProfessorProject    Project[]             @relation("ProjectSupervisor")
+  Posistions          Positions[]          @relation("PositionsProfessor")
 }
 
 model Professor_attachment {
-  id               Int       @id @default(autoincrement())
+  id               Int    @id @default(autoincrement())
   ssn              Int
   degreeDate       Int
   degreeUniversity String
-  gender           Gender
-  degree           Degree
-  professorId      Int       @unique
-  professor        Professor @relation("HasAttachment", fields: [professorId], references: [id])
+
+  gender      Gender
+  degree      Degree
+  professorId Int       @unique
+  professor   Professor @relation("HasAttachment", fields: [professorId], references: [id])
 }
 
 enum Degree {
@@ -102,12 +106,20 @@ model Student {
   StudentResearch Research[] @relation("ResearchStudent")
 }
 
+model Positions {
+  positionId Int            @id @default(autoincrement())
+  name        String
+  type        Position_Type
+  professorId Int
+  professor   Professor      @relation("PositionsProfessor", fields: [professorId], references: [id])
+}
+
 enum Type {
   Master
   GraduationProject
 }
 
-enum Posistion_Type {
+enum Position_Type {
   Internal_position
   External_position
 }
