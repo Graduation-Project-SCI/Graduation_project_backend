@@ -104,10 +104,10 @@ class ResearchController {
         response: Response
     ) => {
         try {
-            const id = parseInt(request.params.id as string);
+            const {type} = request.body;
             const researches = await prisma.research.findMany({
                 where: {
-                    typeId: id
+                    type: type
                 },
             });
             return sendResponse(response, 200, 'success', researches);
