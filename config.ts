@@ -4,6 +4,7 @@ dotenv.config();
 export const config = {
   port: process.env.PORT,
   jwt: {
+    authPrivateKey: process.env.AUTH_PRIVATE_KEY,
     pepper: process.env.JWT_PEPPER,
     salt: process.env.SALT,
   },
