@@ -8,7 +8,8 @@ const tvm = tokenValidateMiddleware
 router.post('/login', AuthController.login)
 router.post('/createUser', AuthController.createUser)
 router.get('/allProfessors', tvm, ProfessorController.getAllProfessors)
-router.get('/:id', tvm, ProfessorController.getProfessorById)
+router.get('/getProfessorById/:id', tvm, ProfessorController.getProfessorById)
+router.get('/getProfessor', tvm, ProfessorController.getProfessor)
 router.put('/update/:id', tvm, ProfessorController.updateProfessor)
 router.delete('/delete/:id', tvm, ProfessorController.deleteProfessor)
 
