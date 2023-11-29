@@ -33,7 +33,6 @@ model Professor_attachment {
   ssn              Int
   degreeDate       Int
   degreeUniversity String
-
   gender      Gender
   degree      Degree
   professorId Int       @unique
