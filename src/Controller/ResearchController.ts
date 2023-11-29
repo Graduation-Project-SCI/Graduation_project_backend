@@ -104,7 +104,7 @@ class ResearchController {
         response: Response
     ) => {
         try {
-            const type = request.body 
+            const {type} = request.body 
             const researches = await prisma.research.findMany({
                 where: {
                     type,
