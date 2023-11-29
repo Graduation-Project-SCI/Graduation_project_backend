@@ -30,7 +30,7 @@ class AuthController {
         token: accessToken,
       });
     } catch (error) {
-      response.json(error);
+      response.status(403).json(error);
     }
   };
 
@@ -62,7 +62,7 @@ class AuthController {
           } else return response.status(401).json('Password Incorrect!');
         }
       } catch (error) {
-        response.json(error);
+        response.status(403).json(error);
       }
     } else {
       response.status(404).json('Data Not Found!');
@@ -84,9 +84,9 @@ function generateAccessToken(user: object, request: Request) {
   const i = 'SCI';
   const s = 'some@user.com';
   const a = request.headers['user-agent'];
-  console.log(a);
+  // console.log(a);
   // Token signing options
-  return jwt.sign({ user }, process.env.auth_private_key as string, {
+  return jwt.sign({ user }, config.jwt.authPrivateKey as string, {
     // algorithm: 'RS256', // Use RS256 for asymmetric key
     // issuer: i,
     // subject: s,

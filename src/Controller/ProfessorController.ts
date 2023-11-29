@@ -44,6 +44,25 @@ class Professor {
     }
   };
 
+  public static getProfessor = async (request: Request, response: Response) => {
+    const user = request.body.decoded.user;
+    try {
+      const professor = await prisma.professor.findUnique({
+        where: {
+          id: user.id,
+        },
+      });
+      return sendResponse(response, 200, "success", professor);
+    } catch (err: unknown) {
+      return sendResponse(
+        response,
+        404,
+        "error can't get Professor invalid id.",
+        err
+      );
+    }
+  }
+
   public static updateProfessor = async (
     request: Request,
     response: Response
