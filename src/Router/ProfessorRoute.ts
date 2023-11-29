@@ -5,8 +5,6 @@ import tokenValidateMiddleware from '../Auth middleware/authMiddleware'
 const router = Router()
 const tvm = tokenValidateMiddleware
 
-router.post('/login', AuthController.login)
-router.post('/createUser', AuthController.createUser)
 router.get('/allProfessors', tvm, ProfessorController.getAllProfessors)
 router.get('/getProfessorById/:id', tvm, ProfessorController.getProfessorById)
 router.get('/getProfessor', tvm, ProfessorController.getProfessor)
