@@ -30,7 +30,7 @@ class AuthController {
         token: accessToken,
       });
     } catch (error) {
-      response.json(error);
+      response.status(403).json(error);
     }
   };
 
@@ -62,7 +62,7 @@ class AuthController {
           } else return response.status(401).json('Password Incorrect!');
         }
       } catch (error) {
-        response.json(error);
+        response.status(403).json(error);
       }
     } else {
       response.status(404).json('Data Not Found!');
