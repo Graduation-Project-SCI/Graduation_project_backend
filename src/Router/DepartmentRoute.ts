@@ -4,7 +4,7 @@ import tokenValidateMiddleware from "../Auth middleware/authMiddleware";
 const tvm = tokenValidateMiddleware
 const router = Router()
 
-router.post('/create', tvm, departmentController.createDepartment)
+router.post('/create', departmentController.createDepartment)
 router.get('/get/:id', tvm, departmentController.getDepartmentById)
 router.get('/get', departmentController.getAllDepartments)
 router.put('/update/:id', tvm, departmentController.updateDepartment)
