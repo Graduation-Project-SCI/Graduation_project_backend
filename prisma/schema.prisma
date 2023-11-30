@@ -25,18 +25,18 @@ model Professor {
   ProfessorResearch   Research[]            @relation("ResearchAuthor")
   GraduationProject   Project[]             @relation("ProjectAuthor")
   ProfessorProject    Project[]             @relation("ProjectSupervisor")
-  Posistions          Positions[]          @relation("PositionsProfessor")
+  Posistions          Positions[]           @relation("PositionsProfessor")
 }
 
 model Professor_attachment {
-  id               Int    @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   ssn              Int
   degreeDate       Int
   degreeUniversity String
-  gender      Gender
-  degree      Degree
-  professorId Int       @unique
-  professor   Professor @relation("HasAttachment", fields: [professorId], references: [id])
+  gender           Gender
+  degree           Degree
+  professorId      Int       @unique
+  professor        Professor @relation("HasAttachment", fields: [professorId], references: [id])
 }
 
 enum Degree {
@@ -66,11 +66,11 @@ model Research {
   publishYear     Int
   majoring        String
   ProfessorRole   Professor_role
-  masterStudentId Int
-  departmentId    Int
-  masterStudent   Student        @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
   type            Type
+  departmentId    Int
   department      Department     @relation("ResearchDepartment", fields: [departmentId], references: [id])
+  masterStudentId Int
+  masterStudent   Student        @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
   author          Professor      @relation("ResearchAuthor", fields: [authorId], references: [id])
   authorId        Int
   supervisor      Professor      @relation("ResearchSupervisor", fields: [supervisorId], references: [id])
@@ -78,24 +78,23 @@ model Research {
 }
 
 model Project {
-  projectId       Int            @id @default(autoincrement())
-  projectName     String
-  description     String
-  topic           String
-  startDate       DateTime
-  endDate         DateTime
-  status          String
-  createdBy       String
-  affiliate       String
-  type            Type
-  departmentId    Int
-  department      Department     @relation("ProjectDepartment", fields: [departmentId], references: [id])
-  professorRoleId Int            @unique
-  ProfessorRole   Professor_role
-  author          Professor      @relation("ProjectAuthor", fields: [authorId], references: [id])
-  authorId        Int
-  supervisor      Professor      @relation("ProjectSupervisor", fields: [supervisorId], references: [id])
-  supervisorId    Int
+  projectId     Int            @id @default(autoincrement())
+  projectName   String
+  description   String
+  topic         String
+  startDate     DateTime
+  endDate       DateTime
+  status        String
+  createdBy     String
+  affiliate     String
+  type          Type
+  ProfessorRole Professor_role
+  departmentId  Int
+  department    Department     @relation("ProjectDepartment", fields: [departmentId], references: [id])
+  author        Professor      @relation("ProjectAuthor", fields: [authorId], references: [id])
+  authorId      Int
+  supervisor    Professor      @relation("ProjectSupervisor", fields: [supervisorId], references: [id])
+  supervisorId  Int
 }
 
 model Student {
@@ -106,11 +105,11 @@ model Student {
 }
 
 model Positions {
-  positionId Int            @id @default(autoincrement())
+  positionId  Int           @id @default(autoincrement())
   name        String
   type        Position_Type
   professorId Int
-  professor   Professor      @relation("PositionsProfessor", fields: [professorId], references: [id])
+  professor   Professor     @relation("PositionsProfessor", fields: [professorId], references: [id])
 }
 
 enum Type {
