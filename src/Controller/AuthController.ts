@@ -58,7 +58,7 @@ class AuthController {
             const { password: _, ...userWithoutPassword } = user;
             const accessToken = generateAccessToken(userWithoutPassword, request);
             return response.status(200).json({
-              user: user,
+              user: userWithoutPassword,
               token: accessToken,
             });
           } else return response.status(401).json('Password Incorrect!');

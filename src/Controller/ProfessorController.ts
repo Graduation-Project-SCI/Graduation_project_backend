@@ -13,7 +13,13 @@ class Professor {
           professorAttachment:true  
         }
       });
-      return sendResponse(response, 200, "success", Professors);
+      let professorsWithoutPassword: Array<Omit<Professor, 'password'>> = [];
+
+      for (let i = 0; i < Professors.length; i++) {
+        const { password, ...professorWithoutPassword } = Professors[i] as {password:string};
+        professorsWithoutPassword.push(professorWithoutPassword);
+      }
+      return sendResponse(response, 200, "success", professorsWithoutPassword);
     } catch (err: unknown) {
       return sendResponse(response, 404, "error can't get Professors.", err);
     }
@@ -35,7 +41,8 @@ class Professor {
           
         }
       });
-      return sendResponse(response, 200, "success", professor);
+      const { password, ...professorWithoutPassword } = professor as { password: string };
+      return sendResponse(response, 200, "success", professorWithoutPassword);
     } catch (err: unknown) {
       return sendResponse(
         response,
@@ -59,7 +66,8 @@ class Professor {
           
         }
       });
-      return sendResponse(response, 200, "success", professor);
+      const { password, ...professorWithoutPassword } = professor as { password: string };
+      return sendResponse(response, 200, "success", professorWithoutPassword);
     } catch (err: unknown) {
       return sendResponse(
         response,

@@ -1,8 +1,9 @@
 import express from "express";
 import Routers from './src/Router/index'
 import cors from 'cors'
+import { config } from "./config";
 const app = express();
-const port: number = 3000;
+const port: number = parseInt(config.port as string) || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
