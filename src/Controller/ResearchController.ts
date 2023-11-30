@@ -46,6 +46,26 @@ class ResearchController {
             return sendResponse(response, 404, "error can't get research invalid id.", error);
         }
     }
+    public static getResearchByAuthorIdORsupervisorId = async (
+      request: Request,
+      response: Response
+  ) => {
+      try {
+        const id = parseInt(request.params.id as string);
+
+          const research = await prisma.research.findMany({
+              where: {
+                OR:[
+                  {authorId:id},
+                  {supervisorId:id}
+                ]
+              },
+          });
+          return sendResponse(response, 200, 'success', research);
+      } catch (error) {
+          return sendResponse(response, 404, "error can't get researchs .", error);
+      }
+  }
 
     public static updateResearch = async (
         request: Request,
