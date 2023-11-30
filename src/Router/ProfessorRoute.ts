@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import AuthController from '../Controller/AuthController'
 import ProfessorController from '../Controller/ProfessorController'
 import tokenValidateMiddleware from '../Auth middleware/authMiddleware'
 const router = Router()
