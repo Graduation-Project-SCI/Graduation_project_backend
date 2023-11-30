@@ -30,7 +30,10 @@ class Professor {
           id
         },
         include:{
-          professorAttachment:true  
+          professorAttachment:true,  
+          department:true,
+          ProfessorProject:true,
+          
         }
       });
       return sendResponse(response, 200, "success", professor);
@@ -51,6 +54,11 @@ class Professor {
         where: {
           id: user.id,
         },
+        include:{
+          professorAttachment:true,  
+          department:true,
+          
+        }
       });
       return sendResponse(response, 200, "success", professor);
     } catch (err: unknown) {
