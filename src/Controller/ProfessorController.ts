@@ -32,7 +32,6 @@ class Professor {
         include:{
           professorAttachment:true,  
           department:true,
-          ProfessorProject:true,
           
         }
       });
