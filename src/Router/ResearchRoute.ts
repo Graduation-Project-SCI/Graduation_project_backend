@@ -14,5 +14,5 @@ router.get('/getByDepartmentId/:id', tvm, ResearchController.getResearchByDepart
 router.get('/getByTypeId/:id', tvm, ResearchController.getResearchByTypeId)
 router.get('/getByAuthorId/:id', tvm, ResearchController.getResearchsByAuthorId)
 router.get('/getBySupervisorId/:id', tvm, ResearchController.getResearchsBySupervisorId)
-
+router.get('/getResearchByAuthorIdORsupervisorId/:id', ResearchController.getResearchByAuthorIdORsupervisorId)
 export default router
