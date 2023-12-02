@@ -48,6 +48,25 @@ class ProjectController {
       return sendResponse(response, 404, "error can't get Projects.", err);
     }
   }
+  public static getProjectsByAuthorIdOrSupervisorId = async (
+    request: Request,
+    response: Response
+) => {
+    try {
+      const id = parseInt(request.params.id as string);
+        const projects = await prisma.project.findMany({
+            where: {
+              OR:[
+                {authorId:id},
+                {supervisorId:id}
+              ]
+            },
+        });
+        return sendResponse(response, 200, 'success', projects);
+    } catch (error) {
+        return sendResponse(response, 404, "error can't get researchs .", error);
+    }
+}
 
   // Update a project by ID
   public static async updateProject(request: Request, response: Response): Promise<Response> {
