@@ -127,7 +127,6 @@ model Response {
   id          Int       @id @default(autoincrement())
   answer      Answer    @relation(fields: [answerId], references: [id])
   answerId    Int
-  user        String
   Professor   Professor @relation(fields: [professorId], references: [id])
   professorId Int
 }
