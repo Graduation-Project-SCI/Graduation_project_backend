@@ -9,10 +9,11 @@ class Question {
         response: Response
     ) => {
         try {
-            const {text} = request.body as {text:string}
+            const {text, servayId} = request.body as {text:string, servayId:number}
             const questionCreated = await prisma.question.create({
                 data : {
-                    text
+                    text,
+                    servayId
                 }
             });
             return sendResponse(response, 200, 'success', questionCreated)
