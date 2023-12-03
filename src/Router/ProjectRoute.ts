@@ -10,6 +10,6 @@ router.get('/getProjectsById/:id', tvm, ProjectsController.getProjectById)
 router.get('/getProjectsByAuthorIdOrSupervisorId/:id', ProjectsController.getProjectsByAuthorIdOrSupervisorId)
 router.put('/update/:id', tvm, ProjectsController.updateProject)
 router.delete('/delete/:id', tvm, ProjectsController.deleteProject)
-
+router.get('/getProjectsByAuthorIdOrSupervisorId/:id', ProjectsController.getProjectsByAuthorIdOrSupervisorId)
 
 export default router

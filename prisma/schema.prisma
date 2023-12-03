@@ -26,6 +26,7 @@ model Professor {
   GraduationProject   Project[]             @relation("ProjectAuthor")
   ProfessorProject    Project[]             @relation("ProjectSupervisor")
   Posistions          Positions[]           @relation("PositionsProfessor")
+  responses           Response[]
 }
 
 model Professor_attachment {
@@ -37,18 +38,6 @@ model Professor_attachment {
   degree           Degree
   professorId      Int       @unique
   professor        Professor @relation("HasAttachment", fields: [professorId], references: [id])
-}
-
-enum Degree {
-  Assistant
-  Associate
-  Full
-  Emeritus
-}
-
-enum Gender {
-  Male
-  Female
 }
 
 model Research {
@@ -112,6 +101,37 @@ model Positions {
   professor   Professor     @relation("PositionsProfessor", fields: [professorId], references: [id])
 }
 
+model Department {
+  id                  Int         @id @default(autoincrement())
+  name                String
+  ProfessorDepartment Professor[] @relation("ProfessorDepartment")
+  ResearchDepartment  Research[]  @relation("ResearchDepartment")
+  ProjectDepartment   Project[]   @relation("ProjectDepartment")
+}
+
+model Question {
+  id      Int      @id @default(autoincrement())
+  text    String
+  answers Answer[]
+}
+
+model Answer {
+  id         Int        @id @default(autoincrement())
+  text       String
+  question   Question   @relation(fields: [questionId], references: [id])
+  questionId Int
+  responses  Response[]
+}
+
+model Response {
+  id          Int       @id @default(autoincrement())
+  answer      Answer    @relation(fields: [answerId], references: [id])
+  answerId    Int
+  user        String
+  Professor   Professor @relation(fields: [professorId], references: [id])
+  professorId Int
+}
+
 enum Type {
   Master
   GraduationProject
@@ -141,34 +161,19 @@ enum External_position {
   Member_of_the_General_Assembly
 }
 
-model Department {
-  id                  Int         @id @default(autoincrement())
-  name                String
-  ProfessorDepartment Professor[] @relation("ProfessorDepartment")
-  ResearchDepartment  Research[]  @relation("ResearchDepartment")
-  ProjectDepartment   Project[]   @relation("ProjectDepartment")
-}
-
 enum Professor_role {
   author
   supervisor
 }
 
-model Servay {
-  id          Int @id @default(autoincrement())
-  professorId Int
-  rateId      Int
-  questionId  Int
+enum Degree {
+  Assistant
+  Associate
+  Full
+  Emeritus
 }
 
-model Rate {
-  id       Int    @id @default(autoincrement())
-  rateType String
-  avareage String
-}
-
-model Question {
-  id       Int    @id @default(autoincrement())
-  question String
-  answer   String
+enum Gender {
+  Male
+  Female
 }
