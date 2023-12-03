@@ -8,7 +8,9 @@ import AuthRoute from "./AuthRoute"
 import AnswerRoute from "./AnswerRoute"
 import QuestionRoute from "./QuestionRoute"
 import ResponsesRoute from "./ResponsesRoute"
+import ServayRoute from "./ServayRoute"
 import  { Router } from "express";
+import Servay from "../Controller/ServayController"
 
 const routes = Router()
 
@@ -22,6 +24,7 @@ routes.use('/professorAttachment',ProfessorAttachmentRoute)
 routes.use('/answer', AnswerRoute)
 routes.use('/question', QuestionRoute)
 routes.use('/responses', ResponsesRoute)
+routes.use('/servay', ServayRoute)
 
 export default routes
 
