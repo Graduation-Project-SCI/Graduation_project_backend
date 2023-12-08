@@ -27,6 +27,7 @@ model Professor {
   ProfessorProject    Project[]             @relation("ProjectSupervisor")
   Posistions          Positions[]           @relation("PositionsProfessor")
   responses           Response[]
+  userServay          userServay[]
 }
 
 model Professor_attachment {
@@ -113,6 +114,16 @@ model Servay {
   id        Int        @id @default(autoincrement())
   name      String
   questions Question[]
+  userServay userServay[]
+}
+
+model userServay {
+  id       Int        @id @default(autoincrement())
+  servay   Servay     @relation(fields: [servayId], references: [id])
+  servayId Int
+  user     Professor       @relation(fields: [professorId], references: [id])
+  professorId   Int
+  complete Boolean    @default(false)
 }
 
 model Question {
