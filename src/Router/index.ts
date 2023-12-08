@@ -5,6 +5,11 @@ import StudentRoute from "./StudentRoute"
 import ProjectRoute from "./ProjectRoute"
 import ProfessorAttachmentRoute from './ProfessorAttachmentRoute'
 import AuthRoute from "./AuthRoute"
+import AnswerRoute from "./AnswerRoute"
+import QuestionRoute from "./QuestionRoute"
+import ResponsesRoute from "./ResponsesRoute"
+import ServayRoute from "./ServayRoute"
+import UserServay from "./UserServayRoute"
 import  { Router } from "express";
 
 const routes = Router()
@@ -16,9 +21,11 @@ routes.use('/department', DepartmentRoute)
 routes.use('/research', ResearchRoute)
 routes.use('/student',StudentRoute)
 routes.use('/professorAttachment',ProfessorAttachmentRoute)
-
-
-
+routes.use('/answer', AnswerRoute)
+routes.use('/question', QuestionRoute)
+routes.use('/responses', ResponsesRoute)
+routes.use('/servay', ServayRoute)
+routes.use('/userServay', UserServay)
 
 export default routes
 
