@@ -1,5 +1,15 @@
 version: '3.8'
 services:
+
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    networks:
+      - private-network 
+
   mysql:
     image: mysql:8.0
     command: --lower_case_table_names=1
