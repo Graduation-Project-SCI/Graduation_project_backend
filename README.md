@@ -3,9 +3,6 @@
 ### Guide: for how to create a Docker container 
 
 ---
-
-## Docker Documentation for Node.js Application
-
 ### Building the Docker Image 
 
 To build the Docker image, navigate to the directory containing the Dockerfile and run:
