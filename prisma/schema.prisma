@@ -10,13 +10,13 @@ generator client {
 model Professor {
   id                  Int                   @id @default(autoincrement())
   fullName            String
+  role                String                @default("user")
   email               String                @unique
   password            String
   specialty           String?
   phoneNumber         String?
   image               String?
   token               String?
-  posistionsNumper    Int                   @default(0)
   createdAt           DateTime              @default(now())
   departmentId        Int
   department          Department            @relation("ProfessorDepartment", fields: [departmentId], references: [id])
@@ -25,8 +25,9 @@ model Professor {
   ProfessorResearch   Research[]            @relation("ResearchAuthor")
   GraduationProject   Project[]             @relation("ProjectAuthor")
   ProfessorProject    Project[]             @relation("ProjectSupervisor")
-  Posistions          Positions[]           @relation("PositionsProfessor")
+  Positions           Professor_Positions[] @relation("PositionsProfessor")
   responses           Response[]
+  professorAwards     Professor_Awards[]    @relation("AwardedTo")
 }
 
 model Professor_attachment {
@@ -44,8 +45,8 @@ model Research {
   id              Int            @id @default(autoincrement())
   title           String
   description     String
-  startDate       DateTime
-  endDate         DateTime
+  startDate       String
+  endDate         String
   status          String
   createdBy       String
   pagesNumper     Int
@@ -59,10 +60,10 @@ model Research {
   departmentId    Int
   department      Department     @relation("ResearchDepartment", fields: [departmentId], references: [id])
   masterStudentId Int
-  masterStudent   Student        @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
-  author          Professor      @relation("ResearchAuthor", fields: [authorId], references: [id])
+  masterStudent   Student?       @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
+  author          Professor?     @relation("ResearchAuthor", fields: [authorId], references: [id])
   authorId        Int
-  supervisor      Professor      @relation("ResearchSupervisor", fields: [supervisorId], references: [id])
+  supervisor      Professor?     @relation("ResearchSupervisor", fields: [supervisorId], references: [id])
   supervisorId    Int
 }
 
@@ -71,8 +72,8 @@ model Project {
   projectName   String
   description   String
   topic         String
-  startDate     DateTime
-  endDate       DateTime
+  startDate     String
+  endDate       String
   status        String
   createdBy     String
   affiliate     String
@@ -80,9 +81,9 @@ model Project {
   ProfessorRole Professor_role
   departmentId  Int
   department    Department     @relation("ProjectDepartment", fields: [departmentId], references: [id])
-  author        Professor      @relation("ProjectAuthor", fields: [authorId], references: [id])
+  author        Professor?     @relation("ProjectAuthor", fields: [authorId], references: [id])
   authorId      Int
-  supervisor    Professor      @relation("ProjectSupervisor", fields: [supervisorId], references: [id])
+  supervisor    Professor?     @relation("ProjectSupervisor", fields: [supervisorId], references: [id])
   supervisorId  Int
 }
 
@@ -93,12 +94,23 @@ model Student {
   StudentResearch Research[] @relation("ResearchStudent")
 }
 
-model Positions {
+model Professor_Positions {
   positionId  Int           @id @default(autoincrement())
   name        String
   type        Position_Type
+  startDate   String
+  endDate     String
   professorId Int
   professor   Professor     @relation("PositionsProfessor", fields: [professorId], references: [id])
+}
+
+model Professor_Awards {
+  awardId     Int       @id @default(autoincrement())
+  name        String
+  date        String
+  field       String
+  professorId Int
+  professor   Professor @relation("AwardedTo", fields: [professorId], references: [id])
 }
 
 model Department {
@@ -135,30 +147,13 @@ model Response {
 enum Type {
   Master
   GraduationProject
+  ProfessorResearch
+  ProfessorProject
 }
 
 enum Position_Type {
   Internal_position
   External_position
-}
-
-enum Internal_position {
-  University_President
-  Vice_President_of_the_University
-  Dean
-  College_agent
-  Head_of_the_Department
-  Program_coordinator
-  Faculty_committee_member
-  Department_committee_member
-  Department_council_member
-}
-
-enum External_position {
-  minister
-  Deputy_Minister
-  Head_of_a_department_in_the_ministry
-  Member_of_the_General_Assembly
 }
 
 enum Professor_role {
