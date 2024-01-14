@@ -1,13 +1,13 @@
-import { Router } from "express";
-import studentController from "../Controller/StudentController"
-import tokenValidateMiddleware from "../Auth middleware/authMiddleware";
-const tvm = tokenValidateMiddleware
-const router = Router()
+// import { Router } from "express";
+// import studentController from "../Controller/StudentController"
+// import tokenValidateMiddleware from "../Auth middleware/authMiddleware";
+// const tvm = tokenValidateMiddleware
+// const router = Router()
 
-router.post('/create', tvm,  studentController.createStudent)
-router.get('/get/:id', tvm, studentController.getStudentById)
-router.get('/get', tvm, studentController.getAllStudents)
-router.put('/update/:id', tvm, studentController.updateStudent)
-router.delete('/delete/:id', tvm, studentController.deleteStudent)
+// router.post('/create',  studentController.createStudent)
+// router.get('/get/:id', tvm, studentController.getStudentById)
+// router.get('/get', tvm, studentController.getAllStudents)
+// router.put('/update/:id', tvm, studentController.updateStudent)
+// router.delete('/delete/:id', tvm, studentController.deleteStudent)
 
-export default router;
+// export default router;

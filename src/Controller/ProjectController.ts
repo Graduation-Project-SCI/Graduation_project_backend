@@ -56,10 +56,7 @@ class ProjectController {
       const id = parseInt(request.params.id as string);
         const projects = await prisma.project.findMany({
             where: {
-              OR:[
-                {authorId:id},
-                {supervisorId:id}
-              ]
+              professorId:id
             },
         });
         return sendResponse(response, 200, 'success', projects);

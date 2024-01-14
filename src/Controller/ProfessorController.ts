@@ -115,7 +115,7 @@ class Professor {
         })
         return sendResponse(response, 200, "success", professor)
     } catch (err : unknown) {
-        return sendResponse(response, 404, "error can't delete department.", err)
+        return sendResponse(response, 404, "error can't delete Professor.", err)
     }
 }
 }
