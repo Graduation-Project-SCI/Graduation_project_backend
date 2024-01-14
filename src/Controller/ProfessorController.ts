@@ -84,13 +84,14 @@ class Professor {
   ) => {
     try {
       const id = parseInt(request.params.id as string);
-      const { fullName, specialty, phoneNumber, image } = request.body;
+      const { fullName,role, specialty, phoneNumber, image } = request.body;
       const professor = await prisma.professor.update({
         where: {
           id
         },
         data: {
           fullName,
+          role,
           specialty,
           phoneNumber,
           image
