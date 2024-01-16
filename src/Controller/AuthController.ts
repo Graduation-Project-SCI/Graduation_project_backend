@@ -13,7 +13,7 @@ class AuthController {
     response: Response
   ) => {
     try {
-      const { email, password } = request.body;
+      const { email, password, departmentId, fullName } = request.body;
       if (!AuthController.isValidEmail(email)) {
         return response.status(400).json('Invalid Email!');
       }
@@ -22,7 +22,7 @@ class AuthController {
         parseInt(config.jwt.salt as string)
       );
       request.body.password = hashedPassword;
-      const user = await prisma.professor.create({ data: request.body });
+      const user = await prisma.professor.create({ data: {email, password, departmentId, fullName}});
       const { password: _, ...userWithoutPassword } = user;
       const accessToken = generateAccessToken(userWithoutPassword, request);
       sendResponse(response, 200, "success", {
