@@ -13,7 +13,7 @@ class AuthController {
     response: Response
   ) => {
     try {
-      const { email, password, departmentId, fullName } = request.body;
+      let { email, password, departmentId, fullName } = request.body;
       if (!AuthController.isValidEmail(email)) {
         return response.status(400).json('Invalid Email!');
       }
@@ -21,7 +21,7 @@ class AuthController {
         `${password}${config.jwt.pepper}`,
         parseInt(config.jwt.salt as string)
       );
-      request.body.password = hashedPassword;
+      password = hashedPassword;
       const user = await prisma.professor.create({ data: {email, password, departmentId, fullName}});
       const { password: _, ...userWithoutPassword } = user;
       const accessToken = generateAccessToken(userWithoutPassword, request);
