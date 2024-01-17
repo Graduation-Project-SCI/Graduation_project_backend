@@ -147,7 +147,6 @@ class UserServay {
     ) => {
         try {
             const professorId = request.body.decoded.user.id;
-            console.log(professorId)
             const userServay = await prisma.userServay.findMany({
                 where: {
                     professorId:professorId
