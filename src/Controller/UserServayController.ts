@@ -11,11 +11,22 @@ class UserServay {
     ) => {
         try {
             const { id } = request.params;
-            const { servayId } = request.body;
+            const { surveyId } = request.body;
+            const getSurvey = await prisma.userServay.findMany({
+                where: {
+                    AND: {
+                        professorId: parseInt(id),
+                        servayId: parseInt(surveyId),
+                    },
+                },
+            });
+            if (getSurvey.length > 0) {
+                return sendResponse(response, 400, "Survey already exists");
+            }
             const userServay = await prisma.userServay.create({
                 data: {
                     professorId: parseInt(id),
-                    servayId: parseInt(servayId),
+                    servayId: parseInt(surveyId),
                 },
             });
             return sendResponse(response, 200, "success", userServay);
@@ -123,6 +134,26 @@ class UserServay {
                 where: {
                     professorId: parseInt(id),
                 },
+            });
+            return sendResponse(response, 200, "success", userServay);
+        } catch (err : unknown) {
+            return sendResponse(response, 404, "error", err);
+        }
+    }
+
+    public static getProfessorSurvey = async (
+        request: Request,
+        response: Response
+    ) => {
+        try {
+            const professorId = request.body.decoded.user.id;
+            console.log(professorId)
+            const userServay = await prisma.userServay.findMany({
+                where: {
+                    professorId:professorId
+                },include: {
+                    servay: true
+                }
             });
             return sendResponse(response, 200, "success", userServay);
         } catch (err : unknown) {

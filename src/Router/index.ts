@@ -24,8 +24,8 @@ routes.use('/professorAttachment',ProfessorAttachmentRoute)
 routes.use('/answer', AnswerRoute)
 routes.use('/question', QuestionRoute)
 routes.use('/responses', ResponsesRoute)
-routes.use('/servay', ServayRoute)
-routes.use('/userServay', UserServay)
+routes.use('/survey', ServayRoute)
+routes.use('/userSurvey', UserServay)
 
 export default routes
 

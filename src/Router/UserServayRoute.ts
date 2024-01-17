@@ -9,7 +9,8 @@ router.get('/get', tvm, userServayController.getAll)
 router.get('/get/:id', tvm, userServayController.getById)
 router.put('/update/:id', tvm, userServayController.update)
 router.delete('/delete/:id', tvm, userServayController.delete)
-router.get('/getByServayId/:id', tvm, userServayController.getByServayId)
+router.get('/getBySurveyId/:id', tvm, userServayController.getByServayId)
 router.get('/getByProfessortId/:id', tvm, userServayController.getByProfessorId)
+router.get('/getProfessorSurveys', tvm, userServayController.getProfessorSurvey)
 
 export default router;

@@ -43,6 +43,12 @@ class Servay {
             const servay = await prisma.servay.findUnique({
                 where : {
                     id
+                },include : {
+                    questions : {
+                        include : {
+                            answers : true
+                        }
+                    }
                 }
             })
             return sendResponse(response, 200, "success", servay)
