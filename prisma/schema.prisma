@@ -26,7 +26,7 @@ model Professor {
   Positions           Professor_Positions[] @relation("PositionsProfessor")
   responses           Response[]
   professorAwards     Professor_Awards[]    @relation("AwardedTo")
-  userServay          userServay[]
+  userSurvey          userSurvey[]
 }
 
 model Professor_attachment {
@@ -118,17 +118,17 @@ model Department {
   ProjectDepartment   Project[]   @relation("ProjectDepartment")
 }
 
-model Servay {
+model Survey {
   id         Int          @id @default(autoincrement())
   name       String
   questions  Question[]
-  userServay userServay[]
+  userSurvey userSurvey[]
 }
 
-model userServay {
+model userSurvey {
   id          Int       @id @default(autoincrement())
-  servay      Servay    @relation(fields: [servayId], references: [id])
-  servayId    Int
+  survey      Survey    @relation(fields: [surveyId], references: [id])
+  surveyId    Int
   user        Professor @relation(fields: [professorId], references: [id])
   professorId Int
   complete    Boolean   @default(false)
@@ -138,8 +138,8 @@ model Question {
   id       Int      @id @default(autoincrement())
   text     String
   answers  Answer[]
-  servay   Servay   @relation(fields: [servayId], references: [id])
-  servayId Int
+  survey   Survey   @relation(fields: [surveyId], references: [id])
+  surveyId Int
 }
 
 model Answer {

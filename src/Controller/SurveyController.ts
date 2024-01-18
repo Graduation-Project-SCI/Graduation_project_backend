@@ -3,44 +3,44 @@ import { PrismaClient } from '@prisma/client'
 import { sendResponse } from '../helper/sendResponse'
 const prisma = new PrismaClient()
 
-class Servay {
-    public static createServay = async (
+class Survey {
+    public static createSurvey = async (
         request: Request,
         response: Response
     ) => {
         try {
             const {name} = request.body as {name:string}
-            const servayCreated = await prisma.servay.create({
+            const surveyCreated = await prisma.survey.create({
                 data : {
                     name
                 }
             });
-            return sendResponse(response, 200, 'success', servayCreated)
+            return sendResponse(response, 200, 'success', surveyCreated)
         } catch (err : unknown){
-            return sendResponse(response, 404, "error can't create servay.", err)
+            return sendResponse(response, 404, "error can't create survey.", err)
         }
     }
 
-    public static getAllServays = async (
+    public static getAllSurveys = async (
         request: Request,
         response: Response 
     ) => {
         try {
-            const servays = await prisma.servay.findMany()
-            return sendResponse(response, 200, "success", servays)
+            const surveys = await prisma.survey.findMany()
+            return sendResponse(response, 200, "success", surveys)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get servays.", err)
+            return sendResponse(response, 404, "error can't get surveys.", err)
         }
     }
 
-    public static getServayById = async (
+    public static getSurveyById = async (
         request : Request,
         response : Response
     ) => {
       const id = parseInt(request.params.id as string);
 
         try {
-            const servay = await prisma.servay.findUnique({
+            const survey = await prisma.survey.findUnique({
                 where : {
                     id
                 },include : {
@@ -51,20 +51,20 @@ class Servay {
                     }
                 }
             })
-            return sendResponse(response, 200, "success", servay)
+            return sendResponse(response, 200, "success", survey)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't get servay invalid id.", err)
+            return sendResponse(response, 404, "error can't get survey invalid id.", err)
         }
     }
 
-    public static updateServay = async (
+    public static updateSurvey = async (
         request: Request,
         response: Response
     ) => {
         try {
             const name = request.body.name
             const id = parseInt(request.params.id as string);
-            const servay = await prisma.servay.update({
+            const survey = await prisma.survey.update({
                 where : {
                     id
                 },
@@ -72,28 +72,28 @@ class Servay {
                     name
                 }
             })
-            return sendResponse(response, 200, "success", servay)
+            return sendResponse(response, 200, "success", survey)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't update servay invalid id.", err)
+            return sendResponse(response, 404, "error can't update survey invalid id.", err)
         }
     }
 
-    public static deleteServay = async (
+    public static deleteSurvey = async (
         request: Request,
         response: Response
     ) => {
         try {
             const id = parseInt(request.params.id as string);
-            const servayDeleted = await prisma.servay.delete({
+            const surveyDeleted = await prisma.survey.delete({
                 where : {
                     id
                 }
             })
-            return sendResponse(response, 200, "success", servayDeleted)
+            return sendResponse(response, 200, "success", surveyDeleted)
         } catch (err : unknown) {
-            return sendResponse(response, 404, "error can't delete servay invalid id.", err)
+            return sendResponse(response, 404, "error can't delete survey invalid id.", err)
         }
     }
 }
 
-export default Servay
+export default Survey

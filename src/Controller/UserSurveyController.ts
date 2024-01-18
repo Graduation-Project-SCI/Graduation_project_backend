@@ -4,7 +4,7 @@ import { sendResponse } from "../helper/sendResponse";
 import { request } from "http";
 const prisma = new PrismaClient();
 
-class UserServay {
+class UserSurvey {
     public static create = async (
         request: Request,
         response: Response
@@ -12,24 +12,24 @@ class UserServay {
         try {
             const { id } = request.params;
             const { surveyId } = request.body;
-            const getSurvey = await prisma.userServay.findMany({
+            const getSurvey = await prisma.userSurvey.findMany({
                 where: {
                     AND: {
                         professorId: parseInt(id),
-                        servayId: parseInt(surveyId),
+                        surveyId: parseInt(surveyId),
                     },
                 },
             });
             if (getSurvey.length > 0) {
                 return sendResponse(response, 400, "Survey already exists");
             }
-            const userServay = await prisma.userServay.create({
+            const userSurvey = await prisma.userSurvey.create({
                 data: {
                     professorId: parseInt(id),
-                    servayId: parseInt(surveyId),
+                    surveyId: parseInt(surveyId),
                 },
             });
-            return sendResponse(response, 200, "success", userServay);
+            return sendResponse(response, 200, "success", userSurvey);
         } catch (err : unknown) {
             return sendResponse(response, 500, "error", err);
         }
@@ -41,12 +41,12 @@ class UserServay {
     ) => {
         try {
             const { id } = request.params;
-            const userServay = await prisma.userServay.findMany({
+            const userSurvey = await prisma.userSurvey.findMany({
                 where: {
                     professorId: parseInt(id),
                 },
             });
-            return sendResponse(response, 200, "success", userServay);
+            return sendResponse(response, 200, "success", userSurvey);
         } catch (err : unknown) {
             return sendResponse(response, 404, "error", err);
         }
@@ -58,12 +58,12 @@ class UserServay {
     ) => {
         try {
             const { id } = request.params;
-            const userServay = await prisma.userServay.findUnique({
+            const userSurvey = await prisma.userSurvey.findUnique({
                 where: {
                     id: parseInt(id),
                 },
             });
-            return sendResponse(response, 200, "success", userServay);
+            return sendResponse(response, 200, "success", userSurvey);
         } catch (err : unknown) {
             return sendResponse(response, 404, "error", err);
         }
@@ -75,16 +75,16 @@ class UserServay {
     ) => {
         try {
             const { id } = request.params;
-            const { servayId } = request.body;
-            const userServay = await prisma.userServay.update({
+            const { surveyId } = request.body;
+            const userSurvey = await prisma.userSurvey.update({
                 where: {
                     id: parseInt(id),
                 },
                 data: {
-                    servayId: parseInt(servayId),
+                    surveyId: parseInt(surveyId),
                 },
             });
-            return sendResponse(response, 200, "success", userServay);
+            return sendResponse(response, 200, "success", userSurvey);
         } catch (err : unknown) {
             return sendResponse(response, 404, "error", err);
         }
@@ -96,29 +96,29 @@ class UserServay {
     ) => {
         try {
             const { id } = request.params;
-            const userServay = await prisma.userServay.delete({
+            const userSurvey = await prisma.userSurvey.delete({
                 where: {
                     id: parseInt(id),
                 },
             });
-            return sendResponse(response, 200, "success", userServay);
+            return sendResponse(response, 200, "success", userSurvey);
         } catch (err : unknown) {
             return sendResponse(response, 404, "error", err);
         }
     }
 
-    public static getByServayId = async (
+    public static getBySurveyId = async (
         request: Request,
         response: Response
     ) => {
         try {
             const { id } = request.params;
-            const userServay = await prisma.userServay.findMany({
+            const userSurvey = await prisma.userSurvey.findMany({
                 where: {
-                    servayId: parseInt(id),
+                    surveyId: parseInt(id),
                 },
             });
-            return sendResponse(response, 200, "success", userServay);
+            return sendResponse(response, 200, "success", userSurvey);
         } catch (err : unknown) {
             return sendResponse(response, 404, "error", err);
         }
@@ -130,12 +130,12 @@ class UserServay {
     ) => {
         try {
             const { id } = request.params;
-            const userServay = await prisma.userServay.findMany({
+            const userSurvey = await prisma.userSurvey.findMany({
                 where: {
                     professorId: parseInt(id),
                 },
             });
-            return sendResponse(response, 200, "success", userServay);
+            return sendResponse(response, 200, "success", userSurvey);
         } catch (err : unknown) {
             return sendResponse(response, 404, "error", err);
         }
@@ -147,18 +147,18 @@ class UserServay {
     ) => {
         try {
             const professorId = request.body.decoded.user.id;
-            const userServay = await prisma.userServay.findMany({
+            const userSurvey = await prisma.userSurvey.findMany({
                 where: {
                     professorId:professorId
                 },include: {
-                    servay: true
+                    survey: true
                 }
             });
-            return sendResponse(response, 200, "success", userServay);
+            return sendResponse(response, 200, "success", userSurvey);
         } catch (err : unknown) {
             return sendResponse(response, 404, "error", err);
         }
     }
 }
 
-export default UserServay;
+export default UserSurvey;

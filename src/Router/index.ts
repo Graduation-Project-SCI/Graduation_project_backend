@@ -8,8 +8,8 @@ import AuthRoute from "./AuthRoute"
 import AnswerRoute from "./AnswerRoute"
 import QuestionRoute from "./QuestionRoute"
 import ResponsesRoute from "./ResponsesRoute"
-import ServayRoute from "./ServayRoute"
-import UserServay from "./UserServayRoute"
+import ServayRoute from "./SurveyRoute"
+import UserServay from "./UserSurveyRoute"
 import  { Router } from "express";
 
 const routes = Router()
