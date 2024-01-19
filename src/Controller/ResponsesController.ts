@@ -9,7 +9,8 @@ class Responses {
         response: Response
     ) => {
         try {
-            const {answerId, professorId} = request.body as {user:string, answerId:number, professorId:number}
+            const {answerId} = request.body as {answerId:number}
+            const professorId = request.body.decoded.user.id as number;
             const responseCreated = await prisma.response.create({
                 data : {
                     answerId,
