@@ -97,7 +97,6 @@ class UserSurvey {
         try {
             const { id } = request.params;
             const { complete } = request.body;
-            console.log(complete);
             const userSurvey = await prisma.userSurvey.update({
                 where: {
                     id: parseInt(id),
