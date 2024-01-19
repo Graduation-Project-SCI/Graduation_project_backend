@@ -90,6 +90,28 @@ class UserSurvey {
         }
     }
 
+    public static updateComplete = async (
+        request: Request,
+        response: Response
+    ) => {
+        try {
+            const { id } = request.params;
+            const { complete } = request.body;
+            console.log(complete);
+            const userSurvey = await prisma.userSurvey.update({
+                where: {
+                    id: parseInt(id),
+                },
+                data: {
+                    complete: complete,
+                },
+            });
+            return sendResponse(response, 200, "success", userSurvey);
+        } catch (err : unknown) {
+            return sendResponse(response, 404, "error", err);
+        }
+    }
+
     public static delete = async (
         request: Request,
         response: Response
