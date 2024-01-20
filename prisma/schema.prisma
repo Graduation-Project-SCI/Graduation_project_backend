@@ -48,10 +48,10 @@ model Research {
   endDate           String
   status            String
   createdBy         String
-  pagesNumper       Int
+  pagesNumber       Int
   publisher         String
-  magazinName       String
-  magazinVolume     String
+  magazineName      String
+  magazineVolume    String
   publishYear       Int
   majoring          String
   ProfessorRole     Professor_role
