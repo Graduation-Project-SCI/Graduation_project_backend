@@ -10,6 +10,7 @@ import QuestionRoute from "./QuestionRoute"
 import ResponsesRoute from "./ResponsesRoute"
 import ServayRoute from "./SurveyRoute"
 import UserServay from "./UserSurveyRoute"
+import Professor_Positions from "./Professor_Positions"
 import  { Router } from "express";
 
 const routes = Router()
@@ -26,6 +27,7 @@ routes.use('/question', QuestionRoute)
 routes.use('/responses', ResponsesRoute)
 routes.use('/survey', ServayRoute)
 routes.use('/userSurvey', UserServay)
+routes.use('/professor_positions', Professor_Positions);
 
 export default routes
 
