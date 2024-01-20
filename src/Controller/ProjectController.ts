@@ -10,7 +10,8 @@ class ProjectController {
     response: Response
   ) {
     try {
-      const {projectName, description, topic, startDate, endDate, status, createdBy, affiliate, type, ProfessorRole, departmentId, professorId} = request.body;
+      const {projectName, description, topic, startDate, endDate, status, createdBy, affiliate, type, ProfessorRole, departmentId} = request.body;
+      const professorId = parseInt(request.body.decoded.user.id as string);
       if(type !== "Master" && type !== "GraduationProject" && type !== "ProfessorResearch" && type !== "ProfessorProject") return sendResponse(response, 404, "error can't create Project.type must be one of these types: Master, GraduationProject, ProfessorResearch, ProfessorProject");
       if(ProfessorRole !== "author" && ProfessorRole !== "supervisor") return sendResponse(response, 404, "error can't create Project.ProfessorRole must be one of these types: author, supervisor");
       const newProject = await prisma.project.create({ data: {projectName, description, topic, startDate, endDate, status, createdBy, affiliate, type, ProfessorRole, departmentId, professorId} });
