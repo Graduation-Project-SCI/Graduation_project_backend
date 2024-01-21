@@ -37,7 +37,6 @@ class ResearchController {
     ) => {
         try {
             const id = parseInt(request.params.id as string);
-            console.log(id);
             const research = await prisma.research.findUnique({
                 where: {
                     id
