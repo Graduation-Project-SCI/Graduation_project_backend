@@ -10,7 +10,9 @@ class ResearchController {
         response: Response
     ) => {
         try {
-            const research = await prisma.research.create({ data: request.body });
+            const professorId = parseInt(request.body.decoded.user.id as string), departmentId = parseInt(request.body.decoded.user.departmentId as string);
+            const {title, description, startDate, endDate, status, createdBy, pagesNumber, publisher, magazineName, magazineVolume, publishYear, majoring, ProfessorRole, type} = request.body;
+            const research = await prisma.research.create({ data: {title, createdBy, departmentId, description, endDate, magazineName, magazineVolume, majoring, pagesNumber, ProfessorRole, publisher, publishYear, startDate, status, type,professorId:professorId} });
             return sendResponse(response, 200, 'success', research);
         } catch (error) {
             return sendResponse(response, 405, "error can't create research.", error);

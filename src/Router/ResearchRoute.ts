@@ -4,8 +4,8 @@ import tokenValidateMiddleware from '../Auth middleware/authMiddleware'
 const tvm = tokenValidateMiddleware
 const router = Router()
 
-router.post('/create', ResearchController.createResearch)
-router.get('/getAll', ResearchController.getAllResearches)
+router.post('/create', tvm, ResearchController.createResearch)
+router.get('/getAll', tvm, ResearchController.getAllResearches)
 router.get('/getById/:id', tvm, ResearchController.getResearchById)
 router.put('/update/:id', tvm, ResearchController.updateResearch)
 router.delete('/delete/:id', tvm, ResearchController.deleteResearch)
@@ -14,6 +14,6 @@ router.get('/getByDepartmentId/:id', tvm, ResearchController.getResearchByDepart
 router.get('/getByTypeId/:id', tvm, ResearchController.getResearchByTypeId)
 // router.get('/getByAuthorId/:id', tvm, ResearchController.getResearchsByAuthorId)
 // router.get('/getBySupervisorId/:id', tvm, ResearchController.getResearchsBySupervisorId)
-router.get('/getResearchByAuthorIdORsupervisorId/:id', ResearchController.getResearchByAuthorIdORsupervisorId)
+router.get('/getResearchByAuthorIdORsupervisorId/:id', tvm, ResearchController.getResearchByAuthorIdORsupervisorId)
 
 export default router
