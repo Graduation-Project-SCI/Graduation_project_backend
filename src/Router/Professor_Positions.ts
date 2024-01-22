@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Professor_Positions from "../Controller/Professor_Positions"
-import tokenValidateMiddleware from "../Auth middleware/authMiddleware";
+import tokenValidateMiddleware from "../middlewares/authMiddleware";
 const tvm = tokenValidateMiddleware
 const router = Router()
 

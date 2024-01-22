@@ -106,18 +106,39 @@ class Professor {
   public static deleteProfessor = async (
     request : Request,
     response : Response
-) => {
+  ) => {
+      try {
+        const id = parseInt(request.params.id as string);
+        const professor = await prisma.professor.delete({
+              where: {
+                  id
+              }
+          })
+          return sendResponse(response, 200, "success", professor)
+      } catch (err : unknown) {
+          return sendResponse(response, 404, "error can't delete Professor.", err)
+      }
+  }
+
+  public static updateProfessorImage = async (
+    request: Request,
+    response: Response
+  ) => {
     try {
-      const id = parseInt(request.params.id as string);
-      const professor = await prisma.professor.delete({
-            where: {
-                id
-            }
-        })
-        return sendResponse(response, 200, "success", professor)
-    } catch (err : unknown) {
-        return sendResponse(response, 404, "error can't delete Professor.", err)
+      const id = request.body.decoded.user.id;
+      let image = `http://localhost:3000/api/images/${request.file?.filename}`;
+      const professor = await prisma.professor.update({
+        where: {
+          id
+        },
+        data: {
+          image
+        },
+      });
+      return sendResponse(response, 200, "success", professor);
+    } catch (err: unknown) {
+      return sendResponse(response, 404, "error can't update Professor.", err);
     }
-}
+  }
 }
 export default Professor;

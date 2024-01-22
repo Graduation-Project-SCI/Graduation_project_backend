@@ -1,6 +1,6 @@
 import { Router } from "express";
 import QuestionController from "../Controller/QuestionController";
-import tokenValidateMiddleware from "../Auth middleware/authMiddleware";
+import tokenValidateMiddleware from "../middlewares/authMiddleware";
 const tvm = tokenValidateMiddleware
 const router = Router()
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import userSurveyController from "../Controller/UserSurveyController";
-import tokenValidateMiddleware from "../Auth middleware/authMiddleware";
+import tokenValidateMiddleware from "../middlewares/authMiddleware";
 const tvm = tokenValidateMiddleware
 const router = Router()
 

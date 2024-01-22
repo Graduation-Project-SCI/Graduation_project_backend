@@ -1,12 +1,14 @@
 import { Router } from "express";
 import professorAttachmentController from "../Controller/ProfessorAttachmentController"
+import tokenValidateMiddleware from '../middlewares/authMiddleware'
+const tvm = tokenValidateMiddleware
 
 const router = Router()
 
-router.post('/create', professorAttachmentController.createProfessorAttachment)
-router.get('/get/:id', professorAttachmentController.getProfessorAttachmentById)
-router.get('/get', professorAttachmentController.getAllProfessorAttachment)
-router.put('/update/:id', professorAttachmentController.updateProfessorAttachment)
-router.delete('/delete/:id', professorAttachmentController.deleteProfessorAttachment)
+router.post('/create', tvm, professorAttachmentController.createProfessorAttachment)
+router.get('/get/:id', tvm, professorAttachmentController.getProfessorAttachmentById)
+router.get('/get', tvm, professorAttachmentController.getAllProfessorAttachment)
+router.put('/update/:id', tvm, professorAttachmentController.updateProfessorAttachment)
+router.delete('/delete/:id', tvm, professorAttachmentController.deleteProfessorAttachment)
 
 export default router;

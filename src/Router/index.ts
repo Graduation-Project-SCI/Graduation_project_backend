@@ -12,7 +12,8 @@ import ServayRoute from "./SurveyRoute"
 import UserServay from "./UserSurveyRoute"
 import Professor_Positions from "./Professor_Positions"
 import Professor_Awards from "./Professor_Awards"
-import  { Router } from "express";
+import  { Router, Request, Response } from "express";
+import path from "path"
 
 const routes = Router()
 
@@ -30,7 +31,12 @@ routes.use('/survey', ServayRoute)
 routes.use('/userSurvey', UserServay)
 routes.use('/professor_positions', Professor_Positions);
 routes.use('/professor_awards', Professor_Awards);
-
+routes.get('/images/:filename', (req: Request, res: Response) => {
+    const filename = req.params.filename;
+    
+    const imagePath = path.join(__dirname, '..', '..', 'public', 'uploads', filename);
+    res.sendFile(imagePath);
+});
 
 export default routes
 
