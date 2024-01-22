@@ -4,7 +4,10 @@ import tokenValidateMiddleware from "../Auth middleware/authMiddleware";
 const tvm = tokenValidateMiddleware
 const router = Router()
 
+
+router.post('/create', Professor_Awards.createProfessor_Awards)
 router.get('/get', Professor_Awards.getAllProfessor_Awards)
+router.get('/getByProfessorId/:id', Professor_Awards.getProfessor_AwardsByProfessorId)
 router.get('/get/:id', tvm, Professor_Awards.getProfessor_AwardsById)
 router.put('/update/:id', tvm, Professor_Awards.updateProfessor_Awards)
 router.delete('/delete/:id', tvm, Professor_Awards.deleteProfessor_Awards)

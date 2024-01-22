@@ -16,6 +16,24 @@ class Professor_Positions {
         }
     }
 
+    public static getProfessor_PositionsByProfessorId = async (
+      request : Request,
+      response : Response
+  ) => {
+    const id = parseInt(request.params.id as string);
+
+      try {
+          const professor_positions = await prisma.professor_Positions.findMany({
+              where : {
+                professorId:id
+              }
+          })
+          return sendResponse(response, 200, "success", professor_positions)
+      } catch (err : unknown) {
+          return sendResponse(response, 404, "error can't get professor_positions invalid id.", err)
+      }
+  }
+
     public static getProfessor_PositionsById = async (
         request : Request,
         response : Response
