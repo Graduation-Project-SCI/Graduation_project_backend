@@ -10,7 +10,8 @@ class Professor {
     try {
       const Professors = await prisma.professor.findMany({
         include:{
-          professorAttachment:true  
+          professorAttachment:true,
+          department:true  
         }
       });
       let professorsWithoutPassword: Array<Omit<Professor, 'password'>> = [];
