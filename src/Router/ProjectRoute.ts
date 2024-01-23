@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import ProjectsController from '../Controller/ProjectController'
-import tokenValidateMiddleware from '../Auth middleware/authMiddleware'
+import tokenValidateMiddleware from '../middlewares/authMiddleware'
 const router = Router()
 const tvm = tokenValidateMiddleware
 
