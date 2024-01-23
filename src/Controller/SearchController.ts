@@ -12,16 +12,10 @@ export class SearchController {
     public static search = async (req: Request, res: Response) => {
         try {
             const query = req.query.query as string;
-            const indexName = req.query.index as string;
 
             if (!query) {
                 return sendResponse(res, 400, 'Query parameter is required.');
             }
-
-            if (!indexName) {
-                return sendResponse(res, 400, 'Index parameter is required.');
-            }
-
             const searchResults = await algoliaIndex.search(query);
             const objectIds = searchResults.hits.map(hit => parseInt(hit.objectID));
 
