@@ -27,7 +27,7 @@ class ProjectController {
     response: Response
   ): Promise<Response> {
     try {
-      const projectId = parseInt(request.params.projectId); // Assuming projectId is a route parameter
+      const projectId = parseInt(request.params.id);
       const project = await prisma.project.findUnique({
         where: { projectId },
       });
