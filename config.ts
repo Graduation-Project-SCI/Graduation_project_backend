@@ -8,4 +8,8 @@ export const config = {
     pepper: process.env.JWT_PEPPER,
     salt: process.env.SALT,
   },
+  algolia: {
+    appId: process.env.ALGOLIA_APP_ID ?? '',
+    apiKey: process.env.ALGOLIA_API_KEY ?? '',
+  },
 };
