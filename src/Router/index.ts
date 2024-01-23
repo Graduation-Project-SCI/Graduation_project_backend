@@ -12,6 +12,7 @@ import ServayRoute from "./SurveyRoute"
 import UserServay from "./UserSurveyRoute"
 import Professor_Positions from "./Professor_Positions"
 import Professor_Awards from "./Professor_Awards"
+import search from "./SearchRoute"
 import  { Router, Request, Response } from "express";
 import path from "path"
 
@@ -37,6 +38,7 @@ routes.get('/images/:filename', (req: Request, res: Response) => {
     const imagePath = path.join(__dirname, '..', '..', 'public', 'uploads', filename);
     res.sendFile(imagePath);
 });
+routes.use('/search', search)
 
 export default routes
 

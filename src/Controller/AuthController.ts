@@ -4,9 +4,12 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { sendResponse } from '../helper/sendResponse';
 import { config } from '../../config';
+import algoliasearch from 'algoliasearch';
 
 const prisma = new PrismaClient();
 
+const algoliaClient = algoliasearch(config.algolia.appId, config.algolia.apiKey);
+const algoliaIndex = algoliaClient.initIndex('professors');
 class AuthController {
   public static createUser = async (
     request: Request,
@@ -23,6 +26,11 @@ class AuthController {
       );
       password = hashedPassword;
       const user = await prisma.professor.create({ data: {email, password, departmentId, fullName}});
+      const professorAlgolia: ProfessorAlgolia = {
+        objectID: user.id.toString(),
+        name: user.fullName,
+      };
+      await algoliaIndex.saveObject(professorAlgolia);
       const { password: _, ...userWithoutPassword } = user;
       const accessToken = generateAccessToken(userWithoutPassword, request);
       sendResponse(response, 200, "success", {
@@ -96,4 +104,9 @@ function generateAccessToken(user: object, request: Request) {
     // audience: a,
     expiresIn: '30d', // 30 days validity
   });
+}
+
+export interface ProfessorAlgolia {
+  objectID: string; 
+  name: string;
 }
