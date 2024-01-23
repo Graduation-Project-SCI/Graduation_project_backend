@@ -88,7 +88,6 @@ class ProfessorAttachment {
         degreeUniversity,
         gender,
         degree,
-        professorId,
       } = request.body;
       const id = parseInt(request.params.id as string);
 
@@ -99,7 +98,6 @@ class ProfessorAttachment {
           degreeUniversity,
           gender,
           degree,
-          professorId,
         },
         where: {
           id,

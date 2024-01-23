@@ -10,7 +10,8 @@ class Professor {
     try {
       const Professors = await prisma.professor.findMany({
         include:{
-          professorAttachment:true  
+          professorAttachment:true,
+          department:true  
         }
       });
       let professorsWithoutPassword: Array<Omit<Professor, 'password'>> = [];
@@ -84,18 +85,24 @@ class Professor {
   ) => {
     try {
       const id = parseInt(request.params.id as string);
-      const { fullName, specialty, phoneNumber, image } = request.body;
+      const requestBody = request.body;
+  
+      const allowedProperties = ['fullName', 'specialty', 'phoneNumber', 'departmentId'];
+      const data = {} as Record<string, unknown>;
+  
+      for (const prop of allowedProperties) {
+        if (requestBody[prop] !== undefined) {
+          data[prop] = requestBody[prop];
+        }
+      }
+  
       const professor = await prisma.professor.update({
         where: {
           id
         },
-        data: {
-          fullName,
-          specialty,
-          phoneNumber,
-          image
-        },
+        data,
       });
+  
       return sendResponse(response, 200, "success", professor);
     } catch (err: unknown) {
       return sendResponse(response, 404, "error can't update Professor.", err);
@@ -105,18 +112,39 @@ class Professor {
   public static deleteProfessor = async (
     request : Request,
     response : Response
-) => {
+  ) => {
+      try {
+        const id = parseInt(request.params.id as string);
+        const professor = await prisma.professor.delete({
+              where: {
+                  id
+              }
+          })
+          return sendResponse(response, 200, "success", professor)
+      } catch (err : unknown) {
+          return sendResponse(response, 404, "error can't delete Professor.", err)
+      }
+  }
+
+  public static updateProfessorImage = async (
+    request: Request,
+    response: Response
+  ) => {
     try {
-      const id = parseInt(request.params.id as string);
-      const professor = await prisma.professor.delete({
-            where: {
-                id
-            }
-        })
-        return sendResponse(response, 200, "success", professor)
-    } catch (err : unknown) {
-        return sendResponse(response, 404, "error can't delete department.", err)
+      const id = request.body.decoded.user.id;
+      let image = `http://localhost:3000/api/images/${request.file?.filename}`;
+      const professor = await prisma.professor.update({
+        where: {
+          id
+        },
+        data: {
+          image
+        },
+      });
+      return sendResponse(response, 200, "success", professor);
+    } catch (err: unknown) {
+      return sendResponse(response, 404, "error can't update Professor.", err);
     }
-}
+  }
 }
 export default Professor;

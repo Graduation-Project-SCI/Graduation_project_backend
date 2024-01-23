@@ -10,8 +10,11 @@ class ProjectController {
     response: Response
   ) {
     try {
-      const data = request.body; // Assuming data is in the request body
-      const newProject = await prisma.project.create({ data });
+      const {projectName, description, topic, startDate, endDate, status, createdBy, affiliate, type, ProfessorRole, departmentId} = request.body;
+      const professorId = parseInt(request.body.decoded.user.id as string);
+      if(type !== "Master" && type !== "GraduationProject" && type !== "ProfessorResearch" && type !== "ProfessorProject") return sendResponse(response, 404, "error can't create Project.type must be one of these types: Master, GraduationProject, ProfessorResearch, ProfessorProject");
+      if(ProfessorRole !== "author" && ProfessorRole !== "supervisor") return sendResponse(response, 404, "error can't create Project.ProfessorRole must be one of these types: author, supervisor");
+      const newProject = await prisma.project.create({ data: {projectName, description, topic, startDate, endDate, status, createdBy, affiliate, type, ProfessorRole, departmentId, professorId} });
       return sendResponse(response, 200, "success", newProject);
     } catch (err: unknown) {
       return sendResponse(response, 404, "error can't create Project.", err);
@@ -24,7 +27,7 @@ class ProjectController {
     response: Response
   ): Promise<Response> {
     try {
-      const projectId = parseInt(request.params.projectId); // Assuming projectId is a route parameter
+      const projectId = parseInt(request.params.id);
       const project = await prisma.project.findUnique({
         where: { projectId },
       });
@@ -56,10 +59,7 @@ class ProjectController {
       const id = parseInt(request.params.id as string);
         const projects = await prisma.project.findMany({
             where: {
-              OR:[
-                {authorId:id},
-                {supervisorId:id}
-              ]
+              professorId:id
             },
         });
         return sendResponse(response, 200, 'success', projects);

@@ -10,24 +10,23 @@ generator client {
 model Professor {
   id                  Int                   @id @default(autoincrement())
   fullName            String
+  role                String                @default("user")
   email               String                @unique
   password            String
   specialty           String?
   phoneNumber         String?
   image               String?
   token               String?
-  posistionsNumper    Int                   @default(0)
   createdAt           DateTime              @default(now())
   departmentId        Int
   department          Department            @relation("ProfessorDepartment", fields: [departmentId], references: [id])
   professorAttachment Professor_attachment? @relation("HasAttachment")
-  MasterResearch      Research[]            @relation("ResearchSupervisor")
-  ProfessorResearch   Research[]            @relation("ResearchAuthor")
-  GraduationProject   Project[]             @relation("ProjectAuthor")
-  ProfessorProject    Project[]             @relation("ProjectSupervisor")
-  Posistions          Positions[]           @relation("PositionsProfessor")
+  ProfessorResearchs  Research[]            @relation("Research")
+  Projects            Project[]             @relation("Project")
+  Positions           Professor_Positions[] @relation("PositionsProfessor")
   responses           Response[]
-  userServay          userServay[]
+  professorAwards     Professor_Awards[]    @relation("AwardedTo")
+  userSurvey          userSurvey[]
 }
 
 model Professor_attachment {
@@ -42,29 +41,29 @@ model Professor_attachment {
 }
 
 model Research {
-  id              Int            @id @default(autoincrement())
-  title           String
-  description     String
-  startDate       DateTime
-  endDate         DateTime
-  status          String
-  createdBy       String
-  pagesNumper     Int
-  publisher       String
-  magazinName     String
-  magazinVolume   String
-  publishYear     Int
-  majoring        String
-  ProfessorRole   Professor_role
-  type            Type
-  departmentId    Int
-  department      Department     @relation("ResearchDepartment", fields: [departmentId], references: [id])
-  masterStudentId Int
-  masterStudent   Student        @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
-  author          Professor      @relation("ResearchAuthor", fields: [authorId], references: [id])
-  authorId        Int
-  supervisor      Professor      @relation("ResearchSupervisor", fields: [supervisorId], references: [id])
-  supervisorId    Int
+  id                Int            @id @default(autoincrement())
+  title             String
+  description       String
+  startDate         String
+  endDate           String
+  status            String
+  createdBy         String
+  pagesNumber       Int
+  publisher         String
+  magazineName      String
+  magazineVolume    String
+  publishYear       Int
+  majoring          String
+  ProfessorRole     Professor_role
+  type              Type
+  masterStudentCode Int?
+  departmentId      Int
+  department        Department     @relation("ResearchDepartment", fields: [departmentId], references: [id])
+
+  // masterStudentId Int?
+  // masterStudent   Student?       @relation("ResearchStudent", fields: [masterStudentId], references: [studentId])
+  professor   Professor @relation("Research", fields: [professorId], references: [id])
+  professorId Int
 }
 
 model Project {
@@ -72,8 +71,8 @@ model Project {
   projectName   String
   description   String
   topic         String
-  startDate     DateTime
-  endDate       DateTime
+  startDate     String
+  endDate       String
   status        String
   createdBy     String
   affiliate     String
@@ -81,25 +80,34 @@ model Project {
   ProfessorRole Professor_role
   departmentId  Int
   department    Department     @relation("ProjectDepartment", fields: [departmentId], references: [id])
-  author        Professor      @relation("ProjectAuthor", fields: [authorId], references: [id])
-  authorId      Int
-  supervisor    Professor      @relation("ProjectSupervisor", fields: [supervisorId], references: [id])
-  supervisorId  Int
+  professor     Professor      @relation("Project", fields: [professorId], references: [id])
+  professorId   Int
 }
 
-model Student {
-  studentId       Int        @id @default(autoincrement())
-  studentName     String
-  studentCode     Int
-  StudentResearch Research[] @relation("ResearchStudent")
-}
+// model Student {
+//   studentId       Int        @id @default(autoincrement())
+//   studentName     String
+//   studentCode     Int
+//   StudentResearch Research[] @relation("ResearchStudent")
+// }
 
-model Positions {
+model Professor_Positions {
   positionId  Int           @id @default(autoincrement())
   name        String
   type        Position_Type
+  startDate   String
+  endDate     String
   professorId Int
   professor   Professor     @relation("PositionsProfessor", fields: [professorId], references: [id])
+}
+
+model Professor_Awards {
+  awardId     Int       @id @default(autoincrement())
+  name        String
+  date        String
+  field       String
+  professorId Int
+  professor   Professor @relation("AwardedTo", fields: [professorId], references: [id])
 }
 
 model Department {
@@ -110,28 +118,28 @@ model Department {
   ProjectDepartment   Project[]   @relation("ProjectDepartment")
 }
 
-model Servay {
-  id        Int        @id @default(autoincrement())
-  name      String
-  questions Question[]
-  userServay userServay[]
+model Survey {
+  id         Int          @id @default(autoincrement())
+  name       String
+  questions  Question[]
+  userSurvey userSurvey[]
 }
 
-model userServay {
-  id       Int        @id @default(autoincrement())
-  servay   Servay     @relation(fields: [servayId], references: [id])
-  servayId Int
-  user     Professor       @relation(fields: [professorId], references: [id])
-  professorId   Int
-  complete Boolean    @default(false)
+model userSurvey {
+  id          Int       @id @default(autoincrement())
+  survey      Survey    @relation(fields: [surveyId], references: [id])
+  surveyId    Int
+  user        Professor @relation(fields: [professorId], references: [id])
+  professorId Int
+  complete    Boolean   @default(false)
 }
 
 model Question {
-  id      Int      @id @default(autoincrement())
-  text    String
-  answers Answer[]
-  servay  Servay   @relation(fields: [servayId], references: [id])
-  servayId Int
+  id       Int      @id @default(autoincrement())
+  text     String
+  answers  Answer[]
+  survey   Survey   @relation(fields: [surveyId], references: [id])
+  surveyId Int
 }
 
 model Answer {
@@ -153,30 +161,13 @@ model Response {
 enum Type {
   Master
   GraduationProject
+  ProfessorResearch
+  ProfessorProject
 }
 
 enum Position_Type {
   Internal_position
   External_position
-}
-
-enum Internal_position {
-  University_President
-  Vice_President_of_the_University
-  Dean
-  College_agent
-  Head_of_the_Department
-  Program_coordinator
-  Faculty_committee_member
-  Department_committee_member
-  Department_council_member
-}
-
-enum External_position {
-  minister
-  Deputy_Minister
-  Head_of_a_department_in_the_ministry
-  Member_of_the_General_Assembly
 }
 
 enum Professor_role {
