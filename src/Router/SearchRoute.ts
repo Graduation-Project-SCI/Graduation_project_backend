@@ -4,7 +4,7 @@ import { SearchController } from '../Controller/SearchController'
 const router = Router()
 const tvm = tokenValidateMiddleware
 
-router.get('/search', tvm, SearchController.search)
+router.get('/get', tvm, SearchController.search)
 
 export default router
 
