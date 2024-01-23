@@ -6,32 +6,28 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - mysql
+      - db
     networks:
-      - private-network 
+      - demo-network
 
-  mysql:
-    image: mysql:8.0
-    command: --lower_case_table_names=1
-    restart: unless-stopped
+
+  db:
+    image: mysql
+    restart: always
+    container_name: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=db_prod
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-    ports:
-      - '3306:3306'
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: db
     healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h127.0.0.1', '-P3306']
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      timeout: 30s
       interval: 5s
-      timeout: 2s
-      retries: 20
+      retries: 5
+    ports:
+      - 3306:3306
     networks:
-      - private-network
-
-  
+      - demo-network
 networks:
-  private-network:
-    external: true
-
-  
+  demo-network:
+    driver: bridge
