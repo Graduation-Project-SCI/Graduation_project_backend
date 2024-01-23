@@ -85,19 +85,24 @@ class Professor {
   ) => {
     try {
       const id = parseInt(request.params.id as string);
-      const { fullName,role, specialty, phoneNumber, image } = request.body;
+      const requestBody = request.body;
+  
+      const allowedProperties = ['fullName', 'specialty', 'phoneNumber', 'departmentId'];
+      const data = {} as Record<string, unknown>;
+  
+      for (const prop of allowedProperties) {
+        if (requestBody[prop] !== undefined) {
+          data[prop] = requestBody[prop];
+        }
+      }
+  
       const professor = await prisma.professor.update({
         where: {
           id
         },
-        data: {
-          fullName,
-          role,
-          specialty,
-          phoneNumber,
-          image
-        },
+        data,
       });
+  
       return sendResponse(response, 200, "success", professor);
     } catch (err: unknown) {
       return sendResponse(response, 404, "error can't update Professor.", err);

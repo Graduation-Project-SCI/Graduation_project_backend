@@ -99,7 +99,8 @@ class Professor_Positions {
         response: Response
     ) => {
         try {
-            const {name, type, startDate, endDate, professorId} = request.body
+            const professorId = parseInt(request.body.decoded.user.id as string);
+            const {name, type, startDate, endDate} = request.body
             const professor_positions = await prisma.professor_Positions.create({
                 data : {
                     name,
