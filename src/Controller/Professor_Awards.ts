@@ -98,7 +98,8 @@ class Professor_Awards {
         response: Response
     ) => {
         try {
-            const {name, date, professorId, field} = request.body
+            const professorId = parseInt(request.body.decoded.user.id as string);
+            const {name, date, field} = request.body
             const professor_awards = await prisma.professor_Awards.create({
                 data : {
                     name,
