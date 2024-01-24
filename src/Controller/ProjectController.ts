@@ -85,7 +85,7 @@ class ProjectController {
 
   public static async deleteProject(request: Request, response: Response): Promise<Response> {
     try {
-      const projectId = parseInt(request.params.projectId); // Assuming projectId is a route parameter
+      const projectId = parseInt(request.params.id);
       await prisma.project.delete({ where: { projectId } });
       return sendResponse(response, 200, "success", projectId);
     } catch (err: unknown) {
