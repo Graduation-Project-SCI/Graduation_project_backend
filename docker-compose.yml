@@ -5,9 +5,11 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - demo-network
+    
 
   db:
     image: mysql
@@ -27,22 +29,6 @@ services:
     networks:
       - demo-network
 
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "3001:3000" 
-    environment:
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: admin  
-    volumes:
-      - grafana_data:/var/lib/grafana  
-    depends_on:
-      - db
-    networks:
-      - demo-network
-
-volumes:
-  grafana_data:
 
 networks:
   demo-network:
