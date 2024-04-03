@@ -17,6 +17,7 @@ model Professor {
   phoneNumber         String?
   image               String?
   token               String?
+  resetToken          String?
   createdAt           DateTime              @default(now())
   departmentId        Int
   department          Department            @relation("ProfessorDepartment", fields: [departmentId], references: [id])
