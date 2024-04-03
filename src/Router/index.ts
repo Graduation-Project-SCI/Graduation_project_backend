@@ -12,6 +12,7 @@ import ServayRoute from "./SurveyRoute"
 import UserServay from "./UserSurveyRoute"
 import Professor_Positions from "./Professor_Positions"
 import Professor_Awards from "./Professor_Awards"
+import ResetPassword from "./ResetPassword"
 import search from "./SearchRoute"
 import  { Router, Request, Response } from "express";
 import path from "path"
@@ -32,6 +33,7 @@ routes.use('/survey', ServayRoute)
 routes.use('/userSurvey', UserServay)
 routes.use('/professor_positions', Professor_Positions);
 routes.use('/professor_awards', Professor_Awards);
+routes.use('/resetPassword', ResetPassword);
 routes.get('/images/:filename', (req: Request, res: Response) => {
     const filename = req.params.filename;
     
