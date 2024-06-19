@@ -28,6 +28,7 @@ class ResetPassword {
                 },
                 data: {
                     resetToken: resetToken,
+                    resetTokenExpiry: new Date().getTime() + 3600000,
                 },
             });
             
@@ -42,7 +43,7 @@ class ResetPassword {
                 }
             });
             const message = {
-                from: config.senderEmail.email,
+                from: 'Scholer Sync',
                 to: email,
                 subject: 'Reset Password',
                 text: `Your reset token is ${resetToken}`,
@@ -51,7 +52,6 @@ class ResetPassword {
                 if (err) {
                     return sendResponse(response, 404, 'error can\'t send reset token', err);
                 }
-                console.log(info.response)
             });
             return sendResponse(response, 200, 'success');
         } catch (error) {
@@ -73,7 +73,7 @@ class ResetPassword {
             if (!user) {
                 return sendResponse(response, 404, 'error user not found');
             }
-            if (user.resetToken === resetToken) {
+            if (user.resetToken === resetToken && user.resetTokenExpiry && user.resetTokenExpiry > new Date().getTime()) {
                 return sendResponse(response, 200, 'success');
             }
             return sendResponse(response, 404, 'error invalid token');
