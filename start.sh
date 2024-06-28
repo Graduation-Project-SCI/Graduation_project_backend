@@ -1,2 +1,1 @@
-npx prisma migrate dev --name init
-npm start
+npm install && npm run migrate && npm start
