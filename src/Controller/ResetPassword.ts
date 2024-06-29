@@ -28,7 +28,7 @@ class ResetPassword {
                 },
                 data: {
                     resetToken: resetToken,
-                    resetTokenExpiry: new Date().getTime() + 3600000,
+                    resetTokenExpiry: Math.floor(new Date().getTime() / 1000) + 3600,
                 },
             });
             
@@ -73,7 +73,7 @@ class ResetPassword {
             if (!user) {
                 return sendResponse(response, 404, 'error user not found');
             }
-            if (user.resetToken === resetToken && user.resetTokenExpiry && user.resetTokenExpiry > new Date().getTime()) {
+            if (user.resetToken === resetToken && user.resetTokenExpiry && user.resetTokenExpiry > Math.floor(new Date().getTime() / 1000)) {
                 return sendResponse(response, 200, 'success');
             }
             return sendResponse(response, 404, 'error invalid token');
