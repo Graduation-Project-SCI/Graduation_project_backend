@@ -13,7 +13,7 @@ npm install
 npm run generate
 
 # Run database migrations
-npm run migrate
+npx prisma migrate deploy
 
 # Start the application
 npm start
