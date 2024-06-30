@@ -28,6 +28,9 @@ services:
       - 3306:3306
     networks:
       - demo-network
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
 
 
 networks:
